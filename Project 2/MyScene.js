@@ -59,28 +59,36 @@ class MyScene extends CGFscene {
 		if (this.gui.isKeyPressed("KeyW")) {
 			text+=" W ";
 			keysPressed=true;
-			this.moving.accelarate(0.01);
+			this.moving.accelarate(1);
 		}
 
 		if (this.gui.isKeyPressed("KeyS")){
 			text+=" S ";
 			keysPressed=true;
-			this.moving.accelarate(-0.01);
+			this.moving.accelarate(-1);
 
 		}
 
 		if (this.gui.isKeyPressed("KeyA")) {
 			text+=" A ";
 			keysPressed=true;
-			this.moving.turn(0.01);
+			this.moving.turn(0.1);
 		}
 
 		if (this.gui.isKeyPressed("KeyD")){
 			text+=" D ";
 			keysPressed=true;
-			this.moving.turn(-0.01);
+			this.moving.turn(-0.1);
 
 		}
+	
+		if (this.gui.isKeyPressed("KeyR")){
+			text+=" R ";
+			keysPressed=true;
+			this.moving.reset();
+
+		}
+
 		
 		if (keysPressed)
 			console.log(text);

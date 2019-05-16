@@ -29,7 +29,7 @@ class MyMoving extends CGFobject {
 	}
 
 	update(){
-		var desloc = [Math.cos(this.direction) * this.vel, 0, -Math.sin(this.direction) * this.vel];
+		var desloc = [Math.cos(-this.direction) * this.vel, 0, Math.sin(-this.direction) * this.vel];
 		this.pos[0] += desloc[0];
 		this.pos[1] += desloc[1];
 		this.pos[2] += desloc[2];
@@ -40,7 +40,16 @@ class MyMoving extends CGFobject {
 	}
 
 	accelarate(v){
-		this.vel += v;
+		if(v > 0)
+			this.vel += 0.2;
+		else if(v < 0)
+			this.vel -= 0.2;	
+	}
+
+	reset(){
+		this.vel = 0;
+		this.direction = 0;
+		this.pos = [0, 3, 0];
 	}
 	
     display(){
