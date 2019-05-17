@@ -26,7 +26,10 @@ class MyScene extends CGFscene {
 		this.plane = new Plane(this, 32);
 		this.moving = new MyMoving(this);
 
-        //Objects connected to MyInterface
+		//Objects connected to MyInterface
+		this.scaleFactor = 1;
+		this.speedFactor = 1;
+
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -113,7 +116,15 @@ class MyScene extends CGFscene {
         this.applyViewMatrix();
 
         // Draw axis
-        this.axis.display();
+		this.axis.display();
+		
+		var sca = [this.scaleFactor, 0.0, 0.0, 0.0,
+					0.0, this.scaleFactor, 0.0, 0.0,
+					0.0, 0.0, this.scaleFactor, 0.0,
+					0.0, 0.0, 0.0, 1.0];
+		
+			this.multMatrix(sca);
+
 
 		this.moving.display();
 

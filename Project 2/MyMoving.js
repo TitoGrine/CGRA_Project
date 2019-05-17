@@ -36,14 +36,14 @@ class MyMoving extends CGFobject {
 	}
 
 	turn(v){
-		this.direction += v;
+		this.direction += v * this.scene.speedFactor;
 	}
 
 	accelarate(v){
 		if(v > 0)
-			this.vel += 0.2;
+			this.vel += 0.2 * this.scene.speedFactor;
 		else if(v < 0)
-			this.vel -= 0.2;	
+			this.vel -= 0.2 * this.scene.speedFactor;	
 	}
 
 	reset(){
