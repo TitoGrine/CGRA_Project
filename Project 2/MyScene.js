@@ -28,7 +28,10 @@ class MyScene extends CGFscene {
         this.bird = new MyBird(this, 0.0, 0.0, 0.0, 0.0);
         this.time = 0;
 
-        //Objects connected to MyInterface
+		//Objects connected to MyInterface
+		this.scaleFactor = 1;
+		this.speedFactor = 1;
+
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -61,28 +64,29 @@ class MyScene extends CGFscene {
 		if (this.gui.isKeyPressed("KeyW")) {
 			text+=" W ";
 			keysPressed=true;
-			this.bird.accelarate(0.01);
+			this.bird.accelarate(0.1);
 		}
 
 		if (this.gui.isKeyPressed("KeyS")){
 			text+=" S ";
 			keysPressed=true;
-			this.bird.accelarate(-0.01);
+			this.bird.accelarate(-0.1);
 
 		}
 
 		if (this.gui.isKeyPressed("KeyA")) {
 			text+=" A ";
 			keysPressed=true;
-			this.bird.turn(0.01);
+			this.bird.turn(0.1);
 		}
 
 		if (this.gui.isKeyPressed("KeyD")){
 			text+=" D ";
 			keysPressed=true;
-			this.bird.turn(-0.01);
+			this.bird.turn(-0.1);
 
 		}
+
 		
 		if (keysPressed)
 			console.log(text);
@@ -105,7 +109,15 @@ class MyScene extends CGFscene {
         this.applyViewMatrix();
 
         // Draw axis
-        this.axis.display();
+		this.axis.display();
+		
+		var sca = [this.scaleFactor, 0.0, 0.0, 0.0,
+					0.0, this.scaleFactor, 0.0, 0.0,
+					0.0, 0.0, this.scaleFactor, 0.0,
+					0.0, 0.0, 0.0, 1.0];
+		
+			this.multMatrix(sca);
+
 
         //Apply default appearance
         this.setDefaultAppearance();
@@ -119,7 +131,7 @@ class MyScene extends CGFscene {
         this.popMatrix();
         // ---- END Primitive drawing section
 
-        this.time = (this.time + 1) % 360;
+        this.time = this.time % 360 + 1;
 
         this.bird.update(this.time);
 

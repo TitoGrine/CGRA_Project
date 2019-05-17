@@ -17,16 +17,28 @@ class MyBird extends CGFobject {
         this.leftWing = new MyTriangle(this.scene);
     }
     turn(value){
-		this.orientation += value;
+		this.orientation -= value  * this.scene.speedFactor;
+    }
+	reset(){
+		this.velocity = 0;
+        this.orientation = 0;
+        this.x_pos = 0;
+        this.y_pos = 3.0;
+        this.z_pos = 0;
 	}
 	accelarate(value){
-        if(Math.abs(this.velocity) < 200)
-            this.velocity += value;
+        if(Math.abs(this.velocity) + value < 200){
+            if(value > 0)
+            this.velocity += 0.2 * this.scene.speedFactor;
+            else if(value < 0)
+            this.velocity -= 0.2 * this.scene.speedFactor;
+        }
         else
-            this.velocity--;
+            this.velocity = 200;
 	}
     updateWings(time){
-        this.wing_rotation = Math.PI/4.0 * Math.cos(((1.0 + Math.abs(this.velocity))*3.0*time/360.0)*2.0*Math.PI);
+        this.wing_rotation = Math.PI/4.0 * Math.cos(((1.0+Math.abs(this.velocity))*time/360.0)*2.0*Math.PI);
+		//console.log(this.wing_rotation);    
     }
     updatePos(time){
         this.y_offset = 0.5* Math.cos((time/360)*2*Math.PI);
@@ -40,7 +52,7 @@ class MyBird extends CGFobject {
         var desloc = [Math.cos(this.orientation) * this.velocity, 0, -Math.sin(this.orientation) * this.velocity];
 		//this.x_pos += desloc[0];
 		//this.y_pos += desloc[1];
-		//this.z_pos += desloc[2];
+        //this.z_pos += desloc[2];        
     }
     setHeadPos(){
         this.scene.translate(0.0, 1.0, 1.5);
