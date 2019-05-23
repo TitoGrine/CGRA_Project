@@ -1,13 +1,19 @@
+const stateEnum = { "DOWN": 1, "UP": 2, "NORMAL": 3};
+
 class MyBird extends CGFobject {
 	constructor(scene, x, y, z, ang) {
         super(scene);
         this.x_pos = x;
-        this.y_pos = y;
+		this.y_pos = y;
+		this.y_inicial = y;
         this.z_pos = z;
         this.orientation = ang;
         this.wing_rotation = 0;
         this.velocity = 0;
-        this.y_offset = 0;
+		this.y_offset = 0;
+		this.currentState = stateEnum.NORMAL;
+		
+
 		this.initBuffers();
     }
     initBuffers(){
@@ -23,7 +29,7 @@ class MyBird extends CGFobject {
 		this.velocity = 0;
         this.orientation = 0;
         this.x_pos = 0;
-        this.y_pos = 3.0;
+        this.y_pos = this.y_inicial;
         this.z_pos = 0;
 	}
 	accelarate(value){
@@ -41,15 +47,52 @@ class MyBird extends CGFobject {
 		//console.log(this.wing_rotation);    
     }
     updatePos(time){
-        this.y_offset = 0.5* Math.cos((time/360)*2*Math.PI);
-    }
+		if(this.currentState == stateEnum.NORMAL)
+			this.y_offset = 1* Math.cos((time/360)*2*Math.PI);
+		else
+			this.y_offset = 0;
+	}
+	
+	updateState(pKeyPressed){
+		switch(this.currentState){
+			case stateEnum.NORMAL:
+				if(pKeyPressed)
+					this.currentState = stateEnum.DOWN;
+				break;
+			case stateEnum.DOWN:
+				if(this.y_pos <= 0)
+					this.currentState = stateEnum.UP;
+				break;
+			case stateEnum.UP:
+				if(this.y_pos >= this.y_inicial)
+					this.currentState = stateEnum.NORMAL;
+				break;
+		}
+	}
+
     update(time){
         this.scene.pushMatrix();
         this.updateWings(time);
         this.updatePos(time);
         this.scene.popMatrix();
+		
+		// TODO: Por tempo correto na descida e subida
+		var desloc = [-Math.sin(this.orientation) * this.velocity, 0, Math.cos(this.orientation) * this.velocity];
+		
+		switch(this.currentState){
+			case stateEnum.DOWN:
+				desloc[1] -= 0.2;
+				break;
+			case stateEnum.NORMAL:
+				desloc[1] = 0;
+				break;
+			case stateEnum.UP:
+				desloc[1] += 0.2;
+				break;
+		}
 
-        var desloc = [-Math.sin(this.orientation) * this.velocity, 0, Math.cos(this.orientation) * this.velocity];
+		this.updateState(false);
+
 		this.x_pos += desloc[0];
 		this.y_pos += desloc[1];
         this.z_pos += desloc[2];        
@@ -78,7 +121,7 @@ class MyBird extends CGFobject {
         this.scene.pushMatrix();
 
         this.scene.translate(this.x_pos, this.y_pos + this.y_offset, this.z_pos);
-        this.scene.rotate(this.orientation, 0.0, 1.0, 0.0);
+        this.scene.rotate(-this.orientation, 0.0, 1.0, 0.0);
 
         this.scene.pushMatrix();
         this.setBodyPos();

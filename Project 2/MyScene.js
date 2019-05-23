@@ -25,14 +25,14 @@ class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
 		this.terrain = new MyTerrain(this, 128);
 
-        this.bird = new MyBird(this, 0.0, 0.0, 0.0, 0.0);
+        this.bird = new MyBird(this, 0.0, 10.0, 0.0, 0.0);
         this.time = 0;
 
 		//Objects connected to MyInterface
 		this.scaleFactor = 1;
-        this.speedFactor = 1;
-        
-        
+		this.speedFactor = 1;
+		
+		this.setUpdatePeriod(50);
 
     }
     initLights() {
@@ -86,15 +86,19 @@ class MyScene extends CGFscene {
 			text+=" D ";
 			keysPressed=true;
 			this.bird.turn(-0.1);
-
 		}
+
 		if (this.gui.isKeyPressed("KeyR")){
 			text+=" R ";
 			keysPressed=true;
 			this.bird.reset();
-
 		}
 
+		if (this.gui.isKeyPressed("KeyP")){
+			text+=" P ";
+			keysPressed=true;
+			this.bird.updateState(true);
+		}
 		
 		if (keysPressed)
 			console.log(text);
@@ -103,6 +107,9 @@ class MyScene extends CGFscene {
 
     update(t){
 		this.checkKeys();
+		this.bird.update(t);
+
+		
     }
 
     display() {
@@ -133,15 +140,13 @@ class MyScene extends CGFscene {
 
 
         // ---- BEGIN Primitive drawing section
-        this.pushMatrix();
+		this.pushMatrix();
+		this.translate(0, -4, 0);
         this.rotate(-0.5*Math.PI, 1, 0, 0);
         this.scale(60, 60, 1);
         this.terrain.display();        
         this.popMatrix();
         // ---- END Primitive drawing section
 
-        this.time = this.time % 360 + 1;
-
-        this.bird.update(this.time);
     }
 }
