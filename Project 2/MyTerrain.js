@@ -42,6 +42,8 @@ class MyTerrain extends CGFobject{
 
         this.plane.display();
 
+        this.scene.setActiveShader(this.scene.defaultShader);
+
         this.scene.popMatrix();
     }
 }

@@ -10,7 +10,7 @@ uniform sampler2D colorGradient;
 
 void main() {
 	vec4 filter = texture2D(terrainMap,vTextureCoord);
-	vec4 color = texture2D(terrainTex, vTextureCoord) /*+ 0.5*texture2D(colorGradient, vec2(0.9, -filter.r - filter.b - filter.g)/3.0)*/;
+	vec4 color = texture2D(terrainTex, vTextureCoord) + 0.7 * texture2D(colorGradient, vec2(0.9, -filter.r - filter.b - filter.g)/3.0);
 	
 	gl_FragColor = color;
 }

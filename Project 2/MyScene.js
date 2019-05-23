@@ -136,14 +136,12 @@ class MyScene extends CGFscene {
         this.pushMatrix();
         this.rotate(-0.5*Math.PI, 1, 0, 0);
         this.scale(60, 60, 1);
-        this.terrain.display();        
+        //this.terrain.display();        
         this.popMatrix();
         // ---- END Primitive drawing section
 
         this.time = this.time % 360 + 1;
 
         this.bird.update(this.time);
-
-
     }
 }
