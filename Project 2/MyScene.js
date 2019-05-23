@@ -26,6 +26,14 @@ class MyScene extends CGFscene {
 		this.terrain = new MyTerrain(this, 128);
 
         this.bird = new MyBird(this, 0.0, 10.0, 0.0, 0.0);
+	   
+		this.branches = [
+            new MyTreeBranch(this),
+            new MyTreeBranch(this),
+            new MyTreeBranch(this),
+            new MyTreeBranch(this),
+            new MyTreeBranch(this),
+        ]
         this.time = 0;
 
 		//Objects connected to MyInterface
@@ -137,6 +145,9 @@ class MyScene extends CGFscene {
         //Apply default appearance
         this.setDefaultAppearance();
         this.bird.display();
+
+        for(var i = 0; i < this.branches.length; i++)
+            this.branches[i].display();
 
 
         // ---- BEGIN Primitive drawing section
