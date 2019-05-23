@@ -7,7 +7,7 @@ class MyTerrain extends CGFobject{
         this.plane = new Plane(this.scene, nrDivs);
 
         this.terrainTexture = new CGFtexture(this.scene, "images/terrain.jpg");
-        this.heightTexture = new CGFtexture(this.scene, "images/heightmap.jpg");
+        this.heightTexture = new CGFtexture(this.scene, "images/changedheightmap.jpg");
         this.gradientTexture = new CGFtexture(this.scene, "images/altimetry.png");
         
         this.appearance = new CGFappearance(this.scene);
