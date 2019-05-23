@@ -24,7 +24,13 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
 		this.terrain = new MyTerrain(this, 128);
-
+        this.branches = [
+            new MyTreeBranch(this),
+            new MyTreeBranch(this),
+            new MyTreeBranch(this),
+            new MyTreeBranch(this),
+            new MyTreeBranch(this),
+        ]
         this.bird = new MyBird(this, 0.0, 0.0, 0.0, 0.0);
         this.time = 0;
 
@@ -130,6 +136,9 @@ class MyScene extends CGFscene {
         //Apply default appearance
         this.setDefaultAppearance();
         this.bird.display();
+
+        for(var i = 0; i < this.branches.length; i++)
+            this.branches[i].display();
 
 
         // ---- BEGIN Primitive drawing section
