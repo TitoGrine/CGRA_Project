@@ -50,9 +50,9 @@ class MyBird extends CGFobject {
         this.scene.popMatrix();
 
         var desloc = [Math.cos(this.orientation) * this.velocity, 0, -Math.sin(this.orientation) * this.velocity];
-		//this.x_pos += desloc[0];
-		//this.y_pos += desloc[1];
-        //this.z_pos += desloc[2];        
+		this.x_pos += desloc[0];
+		this.y_pos += desloc[1];
+        this.z_pos += desloc[2];        
     }
     setHeadPos(){
         this.scene.translate(0.0, 1.0, 1.5);

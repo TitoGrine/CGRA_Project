@@ -88,6 +88,12 @@ class MyScene extends CGFscene {
 			this.bird.turn(-0.1);
 
 		}
+		if (this.gui.isKeyPressed("KeyR")){
+			text+=" R ";
+			keysPressed=true;
+			this.bird.reset();
+
+		}
 
 		
 		if (keysPressed)
@@ -123,6 +129,7 @@ class MyScene extends CGFscene {
 
         //Apply default appearance
         this.setDefaultAppearance();
+        this.bird.display();
 
 
         // ---- BEGIN Primitive drawing section
@@ -138,6 +145,5 @@ class MyScene extends CGFscene {
         this.bird.update(this.time);
 
 
-        //this.bird.display();
     }
 }
