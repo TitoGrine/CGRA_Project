@@ -38,6 +38,35 @@ class MyScene extends CGFscene {
 		//Objects connected to MyInterface
 		this.scaleFactor = 1;
 		this.speedFactor = 1;
+
+		// Lightning
+		this.axiom = "X"; //
+		this.ruleF = "FF";
+		this.ruleX = "F[-X][X]F[-X]+FX";
+		// TODO: adicionar regras
+		
+        this.angle = 25.0;
+        this.iterations = 3;
+        this.scaleFactor = 0.5;
+		this.lightning = new MyLightning(this);
+		this.activeLightning = false;
+
+        this.doGenerate = function () {
+            this.lightning.generate(
+                this.axiom,
+                {
+					"F": [ this.ruleF ],
+                    "X": [ this.ruleX ]
+                },
+                this.angle,
+                this.iterations,
+                this.scaleFactor
+            );
+        }
+
+        // do initial generation
+        this.doGenerate();
+
 		
 		this.setUpdatePeriod(50);
 
@@ -106,6 +135,12 @@ class MyScene extends CGFscene {
 			keysPressed=true;
 			this.bird.updateState(true);
 		}
+
+		if (this.gui.isKeyPressed("KeyL")){
+			text+=" L ";
+			keysPressed=true;
+			this.activeLightning = true;
+		}
 		
 		if (keysPressed)
 			console.log(text);
@@ -115,8 +150,17 @@ class MyScene extends CGFscene {
     update(t){
 		this.checkKeys();
 		this.bird.update(t);
-
-		
+		if(this.activeLightning){
+			if(this.lightning.startTime == 0)
+				this.lightning.startAnimation(t);
+			if(t - this.lightning.startTime <= 1000){
+				this.lightning.update(t);
+			}
+			else{
+				this.activeLightning = false;
+				this.lightning.startTime = 0;
+			}
+		}
     }
 
     display() {
@@ -147,7 +191,12 @@ class MyScene extends CGFscene {
 
         for(var i = 0; i < this.branches.length; i++)
             this.branches[i].display();
-
+		
+		if(this.activeLightning){
+			//this.pushMatrix();
+			this.lightning.display();
+			//this.popMatrix();
+		}
 
         // ---- BEGIN Primitive drawing section
 		this.pushMatrix();
@@ -155,7 +204,7 @@ class MyScene extends CGFscene {
         this.rotate(-0.5*Math.PI, 1, 0, 0);
         this.scale(60, 60, 1);
         this.terrain.display();        
-        this.popMatrix();
+		this.popMatrix();
         // ---- END Primitive drawing section
 
     }
