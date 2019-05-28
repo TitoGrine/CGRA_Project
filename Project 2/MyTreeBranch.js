@@ -6,7 +6,7 @@ class MyTreeBranch extends CGFobject {
         this.initBuffers();
         
         this.x_pos = this.rand(-10.0, 10.0);
-        this.y_pos = 7.0;
+        this.y_pos = 0;
         this.z_pos = this.rand(-10.0, 10.0);
 
         this.orientation = Math.PI * this.rand(0.0, 360.0) / 180.0;

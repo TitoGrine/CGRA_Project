@@ -12,6 +12,9 @@ class MyBird extends CGFobject {
         this.velocity = 0;
 		this.y_offset = 0;
 		this.currentState = stateEnum.NORMAL;
+		this.vertical_osc = 0.5;
+
+		this.treeBranch = null;
 		
 
 		this.initBuffers();
@@ -21,7 +24,7 @@ class MyBird extends CGFobject {
         this.head = new MyUnitCubeQuad(this.scene, 1.0, 1.0, 1.0, false);
         this.rightWing = new MyTriangle(this.scene);
         this.leftWing = new MyTriangle(this.scene);
-    }
+	}
     turn(value){
 		this.orientation -= value  * this.scene.speedFactor;
     }
@@ -43,14 +46,50 @@ class MyBird extends CGFobject {
             this.velocity = 200;
 	}
     updateWings(time){
-        this.wing_rotation = Math.PI/4.0 * Math.cos(((1.0+Math.abs(this.velocity))*time/360.0)*2.0*Math.PI);
+		this.wing_rotation = Math.cos(time / 250 * this.scene.speedFactor) * (Math.PI / 4.0 );
+        //this.wing_rotation = Math.PI/4.0 * Math.cos(((1.0+Math.abs(this.velocity))*time/250.0)*2.0*Math.PI);
 		//console.log(this.wing_rotation);    
     }
     updatePos(time){
 		if(this.currentState == stateEnum.NORMAL)
-			this.y_offset = 1* Math.cos((time/360)*2*Math.PI);
+			this.y_offset = this.vertical_osc * Math.cos((time/250)*this.scene.speedFactor*Math.PI);
 		else
 			this.y_offset = 0;
+	}
+
+	insideBounds(x, z){
+		// TODO: ver limites
+		return ((this.x_pos + 2 > x) && (this.x_pos - 2 < x)) && ((this.z_pos + 2 > z) && (this.z_pos - 2 < z));
+	}
+
+	pickUpBranch(){
+		console.log("bird: x:" + this.x_pos + "z: " + this.z_pos);
+
+		for(let i = 0; i < this.scene.nBranches; i++){
+			console.log("branch: x:" + this.scene.branches[i].x_pos + "z: " + this.scene.branches[i].z_pos);
+			if(this.insideBounds(this.scene.branches[i].x_pos, this.scene.branches[i].z_pos)){
+				console.log("pick up");
+				this.treeBranch = this.scene.branches[i];
+				this.scene.branches.splice(i, 1);
+				this.scene.nBranches--;
+				// TODO: ver melhor
+				this.treeBranch.y_pos -= 1;
+				this.treeBranch.x_pos -= this.x_pos;
+				this.treeBranch.z_pos -= this.z_pos;
+				this.treeBranch.orientation -= this.orientation;
+				break;
+			}
+		}
+	}
+
+	dropBranch(){
+		this.treeBranch.y_pos += 1;
+		this.treeBranch.x_pos += this.x_pos;
+		this.treeBranch.z_pos += this.z_pos;
+		this.treeBranch.orientation += this.orientation;
+		this.scene.branches.push(this.treeBranch);
+		this.scene.nBranches++;
+		this.treeBranch = null;
 	}
 	
 	updateState(pKeyPressed){
@@ -60,8 +99,13 @@ class MyBird extends CGFobject {
 					this.currentState = stateEnum.DOWN;
 				break;
 			case stateEnum.DOWN:
-				if(this.y_pos <= 0)
+				if(this.y_pos <= 1){
+					if(this.treeBranch != null)
+						this.dropBranch();
+					else
+						this.pickUpBranch();
 					this.currentState = stateEnum.UP;
+				}
 				break;
 			case stateEnum.UP:
 				if(this.y_pos >= this.y_inicial)
@@ -121,8 +165,9 @@ class MyBird extends CGFobject {
         this.scene.pushMatrix();
 
         this.scene.translate(this.x_pos, this.y_pos + this.y_offset, this.z_pos);
-        this.scene.rotate(-this.orientation, 0.0, 1.0, 0.0);
-
+		this.scene.rotate(-this.orientation, 0.0, 1.0, 0.0);
+		
+		
         this.scene.pushMatrix();
         this.setBodyPos();
         this.body.display();
@@ -141,8 +186,15 @@ class MyBird extends CGFobject {
         this.scene.pushMatrix();
         this.setLeftWingPos();
         this.leftWing.display();
-        this.scene.popMatrix();
+		this.scene.popMatrix();
+		
+		if(this.treeBranch != null){
+			this.treeBranch.display();
+		}
 
-        this.scene.popMatrix();
+
+		this.scene.popMatrix();
+		
+		
     }
 }
