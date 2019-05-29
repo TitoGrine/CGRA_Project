@@ -32,6 +32,7 @@ class MyScene extends CGFscene {
 
 		this.bird = new MyBird(this, 0.0, 4.0, 0.0, 0.0);
 		this.nest = new MyNest(this);
+		this.snow = new MySnow(this);
 	   
 		this.nBranches = 5;
 		this.branches = [];
@@ -122,7 +123,7 @@ class MyScene extends CGFscene {
 		}
 
         
-
+		this.isSnowing = false;
 		
 		this.setUpdatePeriod(50);
 
@@ -238,6 +239,7 @@ class MyScene extends CGFscene {
     update(t){
 		this.checkKeys();
 		this.bird.update(t);
+		this.snow.update(t);
 		
 		if(this.activeLightning){
 			if(this.lightning.startTime == 0)
@@ -286,12 +288,12 @@ class MyScene extends CGFscene {
             this.branches[i].display();
 		
 		for(let i = 0; i < this.trees.length; i++)
-			this.trees[i].display();
+			//this.trees[i].display();
 
 		
 		this.pushMatrix();
 		this.setNestPosition();
-		this.nest.display();
+		//this.nest.display();
 		this.popMatrix();
 
 		// ---- BEGIN Primitive drawing section
@@ -309,6 +311,9 @@ class MyScene extends CGFscene {
 		this.setHousePos();
 		this.house.display();
 		this.popMatrix();
+		
+		if(this.isSnowing)
+			this.snow.display();
 
         // ---- END Primitive drawing section
 
