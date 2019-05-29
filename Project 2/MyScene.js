@@ -44,7 +44,11 @@ class MyScene extends CGFscene {
 		// Lightning
 		this.axiom = "X"; //
 		this.ruleF = "FF";
-		this.ruleX = "F[-X][X]F[-X]+FX";
+        this.ruleX = "F[-X][X]F[-X]+FX";
+		//this.ruleX1 = "F[-X][X]+X";
+		this.ruleX1 = "X+[X]-X-[X]"
+		this.ruleX2 = "XX[F[/X][X]F[\\X]+XF-[F[/X][X]F[\\X]+XF-[/X][X]+X]+XX";
+		//this.ruleX2 = "F[+X]-X";
 		// TODO: adicionar regras
 		
         this.angle = 25.0;
@@ -58,7 +62,9 @@ class MyScene extends CGFscene {
                 this.axiom,
                 {
 					"F": [ this.ruleF ],
-                    "X": [ this.ruleX ]
+					"X": [ this.ruleX,
+						   this.ruleX1,
+						   this.ruleX2 ]
                 },
                 this.angle,
                 this.iterations,
@@ -94,6 +100,9 @@ class MyScene extends CGFscene {
         this.setDiffuse(1.0, 0.4, 0.2, 1.0);
         this.setSpecular(1.0, 0.4, 0.2, 1.0);
         this.setShininess(10.0);
+	}
+	rand(min, max) {
+		return Math.random() * (max - min) + min;
 	}
 
 	checkKeys()  {
@@ -191,16 +200,15 @@ class MyScene extends CGFscene {
 		this.setDefaultAppearance();
 		//this.sphere.display();
 		
-        //this.bird.display();
+		this.bird.display();
+		
+		if(this.activeLightning)
+			this.lightning.display();
 
         for(var i = 0; i < this.branches.length; i++)
             this.branches[i].display();
 		
-		if(this.activeLightning){
-			//this.pushMatrix();
-			this.lightning.display();
-			//this.popMatrix();
-		}
+		
 
 		this.nest.display();
 

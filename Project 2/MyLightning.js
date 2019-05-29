@@ -8,19 +8,23 @@ class MyLightning extends MyLSystem {
 		super(scene);
 		this.startTime = 0;
 		this.depth;
+		this.x_pos;
+		this.z_pos;
     }
 
     // cria o lexico da gramática
     initGrammar(){
         this.grammar = {
-            "F": new MyQuad(this.scene, 0.2, 1),
-            "X": new MyQuad(this.scene, 0.2, 0.2)
+            "F": new MyQuad(this.scene, 1, 1),
+            "X": new MyQuad(this.scene, 1, 1)
         };
 	}
 	
 	startAnimation(t){
 		// TODO: refactor
 		this.axiom = "X";
+		this.x_pos = this.scene.rand(-15, 15);
+		this.z_pos = this.scene.rand(-15, 15);
 		this.iterate();
 		this.startTime = t;
 		this.depth = 0;
@@ -30,7 +34,11 @@ class MyLightning extends MyLSystem {
 		this.depth = (t - this.startTime) / periodicity;
 	}
 	display(){
-        this.scene.pushMatrix();
+		this.scene.pushMatrix();
+		
+		this.scene.translate(this.x_pos, 30, this.z_pos);
+		this.scene.rotate(Math.PI, 0, 0, 1);
+
         this.scene.scale(this.scale, this.scale, this.scale);
 
 		var i;
@@ -92,8 +100,12 @@ class MyLightning extends MyLSystem {
                     if ( primitive )
                     {
 						primitiveCount++;
-                        primitive.display();
-                        this.scene.translate(0, 1, 0);
+						this.scene.pushMatrix();
+						this.scene.scale(0.2, 1, 1);
+						primitive.display();
+						this.scene.popMatrix();
+						this.scene.translate(0, 1, 0);
+
 					}
                     break;
             }
