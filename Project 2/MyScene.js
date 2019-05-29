@@ -25,6 +25,8 @@ class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
 		this.terrain = new MyTerrain(this, 128);
 		this.sphere = new MySphere(this, 20, 20);
+		this.map = new MyCubeMap(this, 'images/background.png');
+		this.house = new MyHouse(this);
 
 		this.y_0 = -6;
 
@@ -101,6 +103,22 @@ class MyScene extends CGFscene {
         this.setSpecular(1.0, 0.4, 0.2, 1.0);
         this.setShininess(10.0);
 	}
+
+	setCubeMapPos(){
+		this.translate(0, 20, 0);
+	}
+
+	setTerrainPos(){
+		this.translate(0, this.y_0, 0);
+        this.rotate(-0.5*Math.PI, 1, 0, 0);
+        this.scale(60, 60, 1);
+	}
+
+	setHousePos(){
+		this.translate(4, 0, -6);
+		this.scale(1/3, 1/3, 1/3);
+	}
+
 	rand(min, max) {
 		return Math.random() * (max - min) + min;
 	}
@@ -213,12 +231,20 @@ class MyScene extends CGFscene {
 
 		//this.nest.display();
 
-        // ---- BEGIN Primitive drawing section
+		// ---- BEGIN Primitive drawing section
 		this.pushMatrix();
-		this.translate(0, this.y_0, 0);
-        this.rotate(-0.5*Math.PI, 1, 0, 0);
-        this.scale(60, 60, 1);
+		this.setCubeMapPos();
+		this.map.display();
+		this.popMatrix();
+
+		this.pushMatrix();
+		this.setTerrainPos();
         this.terrain.display();        
+		this.popMatrix();
+
+		this.pushMatrix();
+		this.setHousePos();
+		this.house.display();
 		this.popMatrix();
         // ---- END Primitive drawing section
 

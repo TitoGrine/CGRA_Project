@@ -10,6 +10,8 @@ class MyLightning extends MyLSystem {
 		this.depth;
 		this.x_pos;
 		this.z_pos;
+
+		this.initAppearance();
     }
 
     // cria o lexico da gramática
@@ -32,6 +34,13 @@ class MyLightning extends MyLSystem {
 	update(t){
 		let periodicity = 1000 / this.axiom.length;
 		this.depth = (t - this.startTime) / periodicity;
+	}
+	initAppearance(){
+		this.lightningAppearance = new CGFappearance(this.scene);
+        this.lightningAppearance.setAmbient(0.9, 0.9, 0.9, 0.4);
+        this.lightningAppearance.setDiffuse(0.9, 0.9, 0.9, 0.4);
+        this.lightningAppearance.setSpecular(0.9, 0.9, 0.9, 1.0);
+        this.lightningAppearance.setShininess(10.0);
 	}
 	display(){
 		this.scene.pushMatrix();
@@ -101,7 +110,8 @@ class MyLightning extends MyLSystem {
                     {
 						primitiveCount++;
 						this.scene.pushMatrix();
-						this.scene.scale(0.2, 1, 1);
+						this.scene.scale(0.3, 1, 1);
+						this.lightningAppearance.apply();
 						primitive.display();
 						this.scene.popMatrix();
 						this.scene.translate(0, 1, 0);

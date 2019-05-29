@@ -20,8 +20,8 @@ class MyBird extends CGFobject {
 		this.initBuffers();
     }
     initBuffers(){
-        this.body = new MyUnitCubeQuad(this.scene, 2.0, 2.0, 2.0, false);
-        this.head = new MyUnitCubeQuad(this.scene, 1.0, 1.0, 1.0, false);
+        this.body = new MyUnitCubeQuad(this.scene, 3.0, 3.0, 3.0);
+        this.head = new MyUnitCubeQuad(this.scene, 1.0, 1.0, 1.0);
         this.rightWing = new MyTriangle(this.scene);
         this.leftWing = new MyTriangle(this.scene);
 	}
