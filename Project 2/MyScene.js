@@ -160,6 +160,7 @@ class MyScene extends CGFscene {
     update(t){
 		this.checkKeys();
 		this.bird.update(t);
+		
 		if(this.activeLightning){
 			if(this.lightning.startTime == 0)
 				this.lightning.startAnimation(t);

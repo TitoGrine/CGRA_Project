@@ -12,11 +12,10 @@ class MyBird extends CGFobject {
         this.velocity = 0;
 		this.y_offset = 0;
 		this.currentState = stateEnum.NORMAL;
-		this.vertical_osc = 0.5;
+		this.vertical_osc = 1;
 
 		this.treeBranch = null;
 		
-
 		this.initBuffers();
     }
     initBuffers(){
@@ -52,7 +51,7 @@ class MyBird extends CGFobject {
     }
     updatePos(time){
 		if(this.currentState == stateEnum.NORMAL)
-			this.y_offset = this.vertical_osc * Math.cos((time/250)*this.scene.speedFactor*Math.PI);
+			this.y_offset = this.vertical_osc * Math.cos(Math.PI * 2 * time / 1000);
 		else
 			this.y_offset = 0;
 	}
