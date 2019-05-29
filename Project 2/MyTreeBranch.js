@@ -5,11 +5,11 @@ class MyTreeBranch extends CGFobject {
 		this.initMaterials();
         this.initBuffers();
         
-        this.x_pos = this.rand(-10.0, 10.0);
+        this.x_pos = this.scene.rand(-10.0, 10.0);
         this.y_pos = 0;
-        this.z_pos = this.rand(-10.0, 10.0);
+        this.z_pos = this.scene.rand(-10.0, 10.0);
 
-        this.orientation = Math.PI * this.rand(0.0, 360.0) / 180.0;
+        this.orientation = Math.PI * this.scene.rand(0.0, 360.0) / 180.0;
 	}
 	initBuffers() {
 		this.wood = new MyCylinder(this.scene, this.side);
@@ -24,13 +24,9 @@ class MyTreeBranch extends CGFobject {
 		this.woodText.loadTexture("Images/trunk_texture.png");
 		this.woodText.setTextureWrap('REPEAT', 'REPEAT');
     }
-    rand(min, max) {
-		return Math.random() * (max - min) + min;
-	}
     setBranchPos(){
         this.scene.translate(this.x_pos, this.y_pos, this.z_pos);
-		this.scene.rotate(Math.PI / 2.0, 1.0, 0.0, 0.0);
-		
+        this.scene.rotate(Math.PI / 2.0, 1.0, 0.0, 0.0);
         this.scene.rotate(this.orientation, 0.0, 0.0, 1.0);
         this.scene.scale(0.2, 2.0, 0.2);
     }
