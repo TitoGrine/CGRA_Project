@@ -24,6 +24,7 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
 		this.terrain = new MyTerrain(this, 128);
+		this.sphere = new MySphere(this, 20, 20);
 
 		this.y_0 = -6;
 
@@ -186,7 +187,9 @@ class MyScene extends CGFscene {
 
 
         //Apply default appearance
-        this.setDefaultAppearance();
+		this.setDefaultAppearance();
+		this.sphere.display();
+		
         this.bird.display();
 
         for(var i = 0; i < this.branches.length; i++)

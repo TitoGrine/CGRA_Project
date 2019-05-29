@@ -74,8 +74,8 @@ class MyBird extends CGFobject {
 				this.scene.nBranches--;
 				// TODO: ver melhor
 				this.treeBranch.y_pos -= 1;
-				this.treeBranch.x_pos -= this.x_pos;
-				this.treeBranch.z_pos -= this.z_pos;
+				this.treeBranch.x_pos = 0;
+				this.treeBranch.z_pos = 0;
 				this.treeBranch.orientation -= this.orientation;
 				break;
 			}

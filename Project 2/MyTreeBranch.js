@@ -29,7 +29,8 @@ class MyTreeBranch extends CGFobject {
 	}
     setBranchPos(){
         this.scene.translate(this.x_pos, this.y_pos, this.z_pos);
-        this.scene.rotate(Math.PI / 2.0, 1.0, 0.0, 0.0);
+		this.scene.rotate(Math.PI / 2.0, 1.0, 0.0, 0.0);
+		
         this.scene.rotate(this.orientation, 0.0, 0.0, 1.0);
         this.scene.scale(0.2, 2.0, 0.2);
     }
