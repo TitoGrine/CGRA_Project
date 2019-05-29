@@ -119,6 +119,14 @@ class MyBird extends CGFobject {
 		}
 	}
 
+	updateWithinLimits(){
+		if(this.x_pos > 15) this.x_pos = 15;
+		if(this.z_pos > 11) this.z_pos = 11;
+
+		if(this.x_pos < -12) this.x_pos = -12;
+		if(this.z_pos < -14) this.z_pos = -14;
+	}
+
     update(time){
         this.scene.pushMatrix();
         this.updateWings(time);
@@ -132,8 +140,10 @@ class MyBird extends CGFobject {
 
 		this.x_pos += desloc[0];
 		this.y_pos += desloc[1];
-        this.z_pos += desloc[2];        
-    }
+		this.z_pos += desloc[2];
+
+		this.updateWithinLimits();
+	}
     setHeadPos(){
         this.scene.translate(0.0, 1.0, 1.5);
         this.scene.rotate(Math.PI/4.0, 0.0, 0.0, 1.0);

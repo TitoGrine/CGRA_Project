@@ -24,7 +24,6 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
 		this.terrain = new MyTerrain(this, 128);
-		this.sphere = new MySphere(this, 20, 20);
 		this.map = new MyCubeMap(this, 'images/background.png');
 		this.house = new MyHouse(this);
 
@@ -217,7 +216,6 @@ class MyScene extends CGFscene {
 
         //Apply default appearance
 		this.setDefaultAppearance();
-		//this.sphere.display();
 		
 		this.bird.display();
 		
@@ -229,7 +227,7 @@ class MyScene extends CGFscene {
 		
 		
 
-		//this.nest.display();
+		this.nest.display();
 
 		// ---- BEGIN Primitive drawing section
 		this.pushMatrix();
