@@ -21,7 +21,6 @@ class MyLPlant extends MyLSystem {
 	display(){
 		this.scene.pushMatrix();
 		this.scene.translate(this.x_pos, 0, this.z_pos);
-		//this.scene.scale(2, 2, 2);
 		super.display();
 		this.scene.popMatrix();
 	}

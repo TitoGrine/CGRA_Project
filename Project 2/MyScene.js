@@ -88,9 +88,9 @@ class MyScene extends CGFscene {
         this.ruleX7 = "F[^X]&X";
 		this.ruleX8 = "F[&X]^X";
 		
-        this.angle = 30.0;
-        this.iterations = 4;
-        this.scaleFactor = 0.5;
+        this.angle = 40.0;
+        this.iterations = 5;
+        this.scaleFactor = 0.55;
 
 		this.trees = [];
 		this.numberTrees = 10;

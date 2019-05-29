@@ -41,6 +41,10 @@ class MyBranch extends CGFobject {
 	}
 	display(){
 		this.scene.woodText.apply();
+		//this.scene.pushMatrix();
+		//this.scene.scale(0.7, 1, 0.7);
 		this.drawElements(this.scene.gl.TRIANGLES);
+		//this.scene.popMatrix();
+
 	}
 }
