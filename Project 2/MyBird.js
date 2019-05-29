@@ -9,10 +9,11 @@ class MyBird extends CGFobject {
         this.z_pos = z;
         this.orientation = ang;
         this.wing_rotation = 0;
-        this.velocity = 0;
+		this.velocity = 0;
+		this.velocity_y = 0;
 		this.y_offset = 0;
 		this.currentState = stateEnum.NORMAL;
-		this.vertical_osc = 1;
+		this.vertical_osc = 0.5;
 
 		this.treeBranch = null;
 		
@@ -37,9 +38,9 @@ class MyBird extends CGFobject {
 	accelarate(value){
         if(Math.abs(this.velocity) + value < 200){
             if(value > 0)
-            this.velocity += 0.2 * this.scene.speedFactor;
+            	this.velocity += 0.2 * this.scene.speedFactor;
             else if(value < 0)
-            this.velocity -= 0.2 * this.scene.speedFactor;
+            	this.velocity -= 0.2 * this.scene.speedFactor;
         }
         else
             this.velocity = 200;
@@ -94,8 +95,10 @@ class MyBird extends CGFobject {
 	updateState(pKeyPressed){
 		switch(this.currentState){
 			case stateEnum.NORMAL:
-				if(pKeyPressed)
+				if(pKeyPressed){
 					this.currentState = stateEnum.DOWN;
+					this.velocity_y = -2 * this.y_pos / 40;
+				}
 				break;
 			case stateEnum.DOWN:
 				if(this.y_pos <= 1){
@@ -104,11 +107,14 @@ class MyBird extends CGFobject {
 					else
 						this.pickUpBranch();
 					this.currentState = stateEnum.UP;
+					this.velocity_y =  -this.velocity_y;
 				}
 				break;
 			case stateEnum.UP:
-				if(this.y_pos >= this.y_inicial)
+				if(this.y_pos >= this.y_inicial){
 					this.currentState = stateEnum.NORMAL;
+					this.velocity_y = 0;
+				}
 				break;
 		}
 	}
@@ -120,19 +126,7 @@ class MyBird extends CGFobject {
         this.scene.popMatrix();
 		
 		// TODO: Por tempo correto na descida e subida
-		var desloc = [-Math.sin(this.orientation) * this.velocity, 0, Math.cos(this.orientation) * this.velocity];
-		
-		switch(this.currentState){
-			case stateEnum.DOWN:
-				desloc[1] -= 0.2;
-				break;
-			case stateEnum.NORMAL:
-				desloc[1] = 0;
-				break;
-			case stateEnum.UP:
-				desloc[1] += 0.2;
-				break;
-		}
+		var desloc = [-Math.sin(this.orientation) * this.velocity, this.velocity_y, Math.cos(this.orientation) * this.velocity];
 
 		this.updateState(false);
 

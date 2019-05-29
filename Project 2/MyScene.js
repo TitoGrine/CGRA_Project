@@ -28,7 +28,7 @@ class MyScene extends CGFscene {
 
 		this.y_0 = -6;
 
-		this.bird = new MyBird(this, 0.0, 10.0, 0.0, 0.0);
+		this.bird = new MyBird(this, 0.0, 4.0, 0.0, 0.0);
 		this.nest = new MyNest(this);
 	   
 		this.nBranches = 5;
@@ -211,14 +211,14 @@ class MyScene extends CGFscene {
 		
 		
 
-		this.nest.display();
+		//this.nest.display();
 
         // ---- BEGIN Primitive drawing section
 		this.pushMatrix();
 		this.translate(0, this.y_0, 0);
         this.rotate(-0.5*Math.PI, 1, 0, 0);
         this.scale(60, 60, 1);
-        //this.terrain.display();        
+        this.terrain.display();        
 		this.popMatrix();
         // ---- END Primitive drawing section
 
