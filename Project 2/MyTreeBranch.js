@@ -21,7 +21,7 @@ class MyTreeBranch extends CGFobject {
         this.woodText.setDiffuse(0.713, 0.6078, 0.298, 1.0);
         this.woodText.setSpecular(0, 0, 0, 0.1);
 		this.woodText.setShininess(10.0);
-		this.woodText.loadTexture("Images/trunk_texture.png");
+		this.woodText.loadTexture("images/trunk_texture.jpg");
 		this.woodText.setTextureWrap('REPEAT', 'REPEAT');
     }
     rand(min, max) {

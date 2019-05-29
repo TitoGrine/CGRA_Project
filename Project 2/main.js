@@ -13,13 +13,13 @@ serialInclude(['../lib/CGF.js','MyScene.js', 'MyInterface.js', 'Plane.js',
                 'shapes/MyTriangle.js',
 				'MyCubeMap.js',
 				'MyHouse.js',
-                'MyUnitCubeQuad.js',
                 'MyBird.js',
                 'MyTerrain.js',
 				'MyTreeBranch.js',	
 				'MyLSystem.js',
 				'MyLightning.js',
-				'shapes/MySphere.js',
+                'shapes/MySphere.js',
+                'MyNest.js',
 								
 
 main=function()
