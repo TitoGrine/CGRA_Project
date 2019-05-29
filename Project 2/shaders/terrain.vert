@@ -9,8 +9,6 @@ uniform mat4 uNMatrix;
 varying vec2 vTextureCoord;
 uniform sampler2D terrainMap;
 
-uniform float normScale;
-
 void main() {
 	vec3 offset=vec3(0.0,0.0,0.0);
 
