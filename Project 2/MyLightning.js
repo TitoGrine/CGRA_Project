@@ -21,6 +21,24 @@ class MyLightning extends MyLSystem {
             "X": new MyQuad(this.scene, 1, 1)
         };
 	}
+
+	// gera o sistema L com os par�metros atuais da cena
+    generate(_axiom, _productions, _angle, _iterations, _scale){
+        // copia o axioma da cena para iniciar a sequência de desenvolvimento
+        this.axiom = _axiom;
+
+        // cria as producoes
+        this.productions=_productions;
+
+        // angulo de rotacao
+        this.angle = _angle * Math.PI / 180.0;
+
+        // numero de iteracoes
+        this.iterations = _iterations;
+
+        // escalamento dos elementos dependente do numero de iteracoes
+        this.scale = Math.pow(_scale, this.iterations-1);
+     }
 	
 	startAnimation(t){
 		// TODO: refactor

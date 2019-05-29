@@ -9,7 +9,8 @@ class MyScene extends CGFscene {
     init(application) {
         super.init(application);
         this.initCameras();
-        this.initLights();
+		this.initLights();
+		this.initMaterials();
 
         //Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -49,6 +50,7 @@ class MyScene extends CGFscene {
 		//this.ruleX1 = "F[-X][X]+X";
 		this.ruleX1 = "X+[X]-X-[X]"
 		this.ruleX2 = "XX[F[/X][X]F[\\X]+XF-[F[/X][X]F[\\X]+XF-[/X][X]+X]+XX";
+		
 		//this.ruleX2 = "F[+X]-X";
 		// TODO: adicionar regras
 		
@@ -71,10 +73,55 @@ class MyScene extends CGFscene {
                 this.iterations,
                 this.scaleFactor
             );
-        }
+		}
+		
+		this.doGenerate();
 
-        // do initial generation
-        this.doGenerate();
+
+
+        this.ruleX9 = "F[-X][X]+X";
+        this.ruleX10 = "F[+X]-X";
+        this.ruleX3 = "F[/X][X]F[\\X]+X";
+        this.ruleX4 = "F[\X][X]/X";
+        this.ruleX5 = "F[/X]\X";
+        this.ruleX6 = "F[^X][X]F[&X]^X";
+        this.ruleX7 = "F[^X]&X";
+		this.ruleX8 = "F[&X]^X";
+		
+        this.angle = 30.0;
+        this.iterations = 4;
+        this.scaleFactor = 0.5;
+
+		this.trees = [];
+		this.numberTrees = 10;
+		for(let i = 0; i < this.numberTrees; i++){
+			this.trees[i] = new MyLPlant(this);
+			this.doGenerate = function () {
+				this.trees[i].generate(
+					this.axiom,
+					{
+						"F": [ this.ruleF ],
+						"X": [ this.ruleX, 
+							this.ruleX9, 
+							this.ruleX10,
+							this.ruleX3,
+							this.ruleX4,
+							this.ruleX5,
+							this.ruleX6,
+							this.ruleX7,
+							this.ruleX8
+							]
+					},
+					this.angle,
+					this.iterations,
+					this.scaleFactor
+				);
+			}
+			// do initial generation
+			this.doGenerate();
+		}
+
+        
 
 		
 		this.setUpdatePeriod(50);
@@ -88,7 +135,16 @@ class MyScene extends CGFscene {
     }
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 45, 45), vec3.fromValues(0, 0, 0));
-    }
+	}
+	initMaterials(){
+		this.woodText = new CGFappearance(this);
+		this.woodText.setAmbient(0.713, 0.6078, 0.298, 0.6);
+        this.woodText.setDiffuse(0.713, 0.6078, 0.298, 1.0);
+        this.woodText.setSpecular(0, 0, 0, 0.1);
+		this.woodText.setShininess(10.0);
+		this.woodText.loadTexture("images/trunk_texture.jpg");
+		this.woodText.setTextureWrap('REPEAT', 'REPEAT');
+	}
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -116,6 +172,10 @@ class MyScene extends CGFscene {
 	setHousePos(){
 		this.translate(4, 0, -6);
 		this.scale(1/3, 1/3, 1/3);
+	}
+
+	setNestPosition(){
+		this.translate(0, 1, 0);
 	}
 
 	rand(min, max) {
@@ -225,9 +285,14 @@ class MyScene extends CGFscene {
         for(var i = 0; i < this.branches.length; i++)
             this.branches[i].display();
 		
-		
+		for(let i = 0; i < this.trees.length; i++)
+			this.trees[i].display();
 
+		
+		this.pushMatrix();
+		this.setNestPosition();
 		this.nest.display();
+		this.popMatrix();
 
 		// ---- BEGIN Primitive drawing section
 		this.pushMatrix();
@@ -244,6 +309,7 @@ class MyScene extends CGFscene {
 		this.setHousePos();
 		this.house.display();
 		this.popMatrix();
+
         // ---- END Primitive drawing section
 
     }
