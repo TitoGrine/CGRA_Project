@@ -22,16 +22,16 @@ class MyHouse extends CGFobject {
 
         this.chimney = new MyPrism(this.scene, 6);
         
-        this.mainBlock = new MyUnitCubeQuad(this.scene, 3.0, 4.0, 3.0, false);
-        this.sideBlock = new MyUnitCubeQuad(this.scene, 4.0, 2.0, 2.0, false);
-        this.balconyBlock = new MyUnitCubeQuad(this.scene, 3.0, 0.4, 5.0, false);
-        this.entranceBlock = new MyUnitCubeQuad(this.scene, 2.0, 1.5, 1.5, false);
-        this.entranceRoofSupport = new MyUnitCubeQuad(this.scene, 2.4, 0.1, 1.9, false);
-        this.poolEntrance = new MyUnitCubeQuad(this.scene, 2.0, 1.4, 1.0, false);
-        this.ceillingBlockMain = new MyUnitCubeQuad(this.scene, 3.4, 0.4, 3.4, false);
-        this.ceillingBlockSide = new MyUnitCubeQuad(this.scene, 4.3, 0.4, 2.4, false);
-        this.poolBlock = new MyUnitCubeQuad(this.scene, 2.6, 0.1, 3.9, false);
-        this.dogHouse = new MyUnitCubeQuad(this.scene, 0.5, 0.4, 0.6, false);
+        this.mainBlock = new MyUnitCubeQuad(this.scene, 3.0, 4.0, 3.0);
+        this.sideBlock = new MyUnitCubeQuad(this.scene, 4.0, 2.0, 2.0);
+        this.balconyBlock = new MyUnitCubeQuad(this.scene, 3.0, 0.4, 5.0);
+        this.entranceBlock = new MyUnitCubeQuad(this.scene, 2.0, 1.5, 1.5);
+        this.entranceRoofSupport = new MyUnitCubeQuad(this.scene, 2.4, 0.1, 1.9);
+        this.poolEntrance = new MyUnitCubeQuad(this.scene, 2.0, 1.4, 1.0);
+        this.ceillingBlockMain = new MyUnitCubeQuad(this.scene, 3.4, 0.4, 3.4);
+        this.ceillingBlockSide = new MyUnitCubeQuad(this.scene, 4.3, 0.4, 2.4);
+        this.poolBlock = new MyUnitCubeQuad(this.scene, 2.6, 0.1, 3.9);
+        this.dogHouse = new MyUnitCubeQuad(this.scene, 0.5, 0.4, 0.6);
     }
     initMaterials(){
         this.doorTexture = new CGFappearance(this.scene);

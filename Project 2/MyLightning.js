@@ -10,6 +10,8 @@ class MyLightning extends MyLSystem {
 		this.depth;
 		this.x_pos;
 		this.z_pos;
+
+		this.initAppearance();
     }
 
     // cria o lexico da gramática
@@ -19,6 +21,24 @@ class MyLightning extends MyLSystem {
             "X": new MyQuad(this.scene, 1, 1)
         };
 	}
+
+	// gera o sistema L com os par�metros atuais da cena
+    generate(_axiom, _productions, _angle, _iterations, _scale){
+        // copia o axioma da cena para iniciar a sequência de desenvolvimento
+        this.axiom = _axiom;
+
+        // cria as producoes
+        this.productions=_productions;
+
+        // angulo de rotacao
+        this.angle = _angle * Math.PI / 180.0;
+
+        // numero de iteracoes
+        this.iterations = _iterations;
+
+        // escalamento dos elementos dependente do numero de iteracoes
+        this.scale = Math.pow(_scale, this.iterations-1);
+     }
 	
 	startAnimation(t){
 		// TODO: refactor
@@ -32,6 +52,13 @@ class MyLightning extends MyLSystem {
 	update(t){
 		let periodicity = 1000 / this.axiom.length;
 		this.depth = (t - this.startTime) / periodicity;
+	}
+	initAppearance(){
+		this.lightningAppearance = new CGFappearance(this.scene);
+        this.lightningAppearance.setAmbient(0.9, 0.9, 0.9, 0.4);
+        this.lightningAppearance.setDiffuse(0.9, 0.9, 0.9, 0.4);
+        this.lightningAppearance.setSpecular(0.9, 0.9, 0.9, 1.0);
+        this.lightningAppearance.setShininess(10.0);
 	}
 	display(){
 		this.scene.pushMatrix();
@@ -101,7 +128,8 @@ class MyLightning extends MyLSystem {
                     {
 						primitiveCount++;
 						this.scene.pushMatrix();
-						this.scene.scale(0.2, 1, 1);
+						this.scene.scale(0.3, 1, 1);
+						this.lightningAppearance.apply();
 						primitive.display();
 						this.scene.popMatrix();
 						this.scene.translate(0, 1, 0);

@@ -9,7 +9,8 @@ class MyScene extends CGFscene {
     init(application) {
         super.init(application);
         this.initCameras();
-        this.initLights();
+		this.initLights();
+		this.initMaterials();
 
         //Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -24,12 +25,14 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
 		this.terrain = new MyTerrain(this, 128);
-		this.sphere = new MySphere(this, 20, 20);
+		this.map = new MyCubeMap(this, 'images/background.png');
+		this.house = new MyHouse(this);
 
 		this.y_0 = -6;
 
-		this.bird = new MyBird(this, 0.0, 10.0, 0.0, 0.0);
+		this.bird = new MyBird(this, 0.0, 4.0, 0.0, 0.0);
 		this.nest = new MyNest(this);
+		this.snow = new MySnow(this);
 	   
 		this.nBranches = 5;
 		this.branches = [];
@@ -48,6 +51,7 @@ class MyScene extends CGFscene {
 		//this.ruleX1 = "F[-X][X]+X";
 		this.ruleX1 = "X+[X]-X-[X]"
 		this.ruleX2 = "XX[F[/X][X]F[\\X]+XF-[F[/X][X]F[\\X]+XF-[/X][X]+X]+XX";
+		
 		//this.ruleX2 = "F[+X]-X";
 		// TODO: adicionar regras
 		
@@ -70,11 +74,56 @@ class MyScene extends CGFscene {
                 this.iterations,
                 this.scaleFactor
             );
-        }
+		}
+		
+		this.doGenerate();
 
-        // do initial generation
-        this.doGenerate();
 
+
+        this.ruleX9 = "F[-X][X]+X";
+        this.ruleX10 = "F[+X]-X";
+        this.ruleX3 = "F[/X][X]F[\\X]+X";
+        this.ruleX4 = "F[\X][X]/X";
+        this.ruleX5 = "F[/X]\X";
+        this.ruleX6 = "F[^X][X]F[&X]^X";
+        this.ruleX7 = "F[^X]&X";
+		this.ruleX8 = "F[&X]^X";
+		
+        this.angle = 40.0;
+        this.iterations = 5;
+        this.scaleFactor = 0.55;
+
+		this.trees = [];
+		this.numberTrees = 10;
+		for(let i = 0; i < this.numberTrees; i++){
+			this.trees[i] = new MyLPlant(this);
+			this.doGenerate = function () {
+				this.trees[i].generate(
+					this.axiom,
+					{
+						"F": [ this.ruleF ],
+						"X": [ this.ruleX, 
+							this.ruleX9, 
+							this.ruleX10,
+							this.ruleX3,
+							this.ruleX4,
+							this.ruleX5,
+							this.ruleX6,
+							this.ruleX7,
+							this.ruleX8
+							]
+					},
+					this.angle,
+					this.iterations,
+					this.scaleFactor
+				);
+			}
+			// do initial generation
+			this.doGenerate();
+		}
+
+        
+		this.isSnowing = false;
 		
 		this.setUpdatePeriod(50);
 
@@ -89,6 +138,15 @@ class MyScene extends CGFscene {
         //this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 45, 45), vec3.fromValues(0, 0, 0));
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 10, 10), vec3.fromValues(0, 0, 0));
     }
+	initMaterials(){
+		this.woodText = new CGFappearance(this);
+		this.woodText.setAmbient(0.713, 0.6078, 0.298, 0.6);
+        this.woodText.setDiffuse(0.713, 0.6078, 0.298, 1.0);
+        this.woodText.setSpecular(0, 0, 0, 0.1);
+		this.woodText.setShininess(10.0);
+		this.woodText.loadTexture("images/trunk_texture.jpg");
+		this.woodText.setTextureWrap('REPEAT', 'REPEAT');
+	}
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -102,6 +160,26 @@ class MyScene extends CGFscene {
         this.setSpecular(1.0, 0.4, 0.2, 1.0);
         this.setShininess(10.0);
 	}
+
+	setCubeMapPos(){
+		this.translate(0, 20, 0);
+	}
+
+	setTerrainPos(){
+		this.translate(0, this.y_0, 0);
+        this.rotate(-0.5*Math.PI, 1, 0, 0);
+        this.scale(60, 60, 1);
+	}
+
+	setHousePos(){
+		this.translate(4, 0, -6);
+		this.scale(1/3, 1/3, 1/3);
+	}
+
+	setNestPosition(){
+		this.translate(0, 1, 0);
+	}
+
 	rand(min, max) {
 		return Math.random() * (max - min) + min;
 	}
@@ -162,6 +240,8 @@ class MyScene extends CGFscene {
     update(t){
 		this.checkKeys();
 		this.bird.update(t);
+		this.snow.update(t);
+		
 		if(this.activeLightning){
 			if(this.lightning.startTime == 0)
 				this.lightning.startAnimation(t);
@@ -199,7 +279,6 @@ class MyScene extends CGFscene {
 
         //Apply default appearance
 		this.setDefaultAppearance();
-		//this.sphere.display();
 		
 		this.bird.display();
 
@@ -209,17 +288,34 @@ class MyScene extends CGFscene {
         for(var i = 0; i < this.branches.length; i++)
             //this.branches[i].display();
 		
+		for(let i = 0; i < this.trees.length; i++)
+			//this.trees[i].display();
+
 		
-
-		//this.nest.display();
-
-        // ---- BEGIN Primitive drawing section
 		this.pushMatrix();
-		this.translate(0, this.y_0, 0);
-        this.rotate(-0.5*Math.PI, 1, 0, 0);
-        this.scale(60, 60, 1);
-        //this.terrain.display();        
+		this.setNestPosition();
+		//this.nest.display();
 		this.popMatrix();
+
+		// ---- BEGIN Primitive drawing section
+		this.pushMatrix();
+		this.setCubeMapPos();
+		this.map.display();
+		this.popMatrix();
+
+		this.pushMatrix();
+		this.setTerrainPos();
+        this.terrain.display();        
+		this.popMatrix();
+
+		this.pushMatrix();
+		this.setHousePos();
+		this.house.display();
+		this.popMatrix();
+		
+		if(this.isSnowing)
+			this.snow.display();
+
         // ---- END Primitive drawing section
 
     }
