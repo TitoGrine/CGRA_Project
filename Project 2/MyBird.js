@@ -23,15 +23,15 @@ class MyBird extends CGFobject {
 		this.initMaterials();
     }
     initBuffers(){
-		this.body = new MySphere(this.scene, 20, 20);
-		this.neck = new MySphere(this.scene, 20, 20);
-		this.head = new MySphere(this.scene, 20, 20);
+		this.body = new MySphere(this.scene, 20, 20, 20);
+		this.neck = new MySphere(this.scene, 20, 20, 20);
+		this.head = new MySphere(this.scene, 20, 20, 20);
 		this.beak = new MyCone(this.scene, 10, 10);
-		this.eye = new MySphere(this.scene, 20, 20);
+		this.eye = new MySphere(this.scene, 20, 1, 1);
 		this.tail = new MyTriangle(this.scene);
 		this.upperLeg = new MyCylinder(this.scene, 10);
 		this.lowerLeg = new MyCylinder(this.scene, 10);
-		this.foot = new MySphere(this.scene, 20, 20);
+		this.foot = new MySphere(this.scene, 20, 1, 1);
 		this.rightWing = new Wing(this.scene, sideEnum.RIGHT);
 		this.leftWing = new Wing(this.scene, sideEnum.LEFT);
 	}
@@ -41,7 +41,7 @@ class MyBird extends CGFobject {
 		this.orange.setDiffuse (0.9, 0.9, 0.9,  1.0);
 		this.orange.setSpecular(0.9, 0.9, 0.9,  0.1);
 		this.orange.setShininess(1);
-		//this.orange.loadTexture("images/feather_texture.jpg");
+		this.orange.loadTexture("images/feather_texture2.jpg");
 		//this.orange.loadTexture("images/hungary.jpg");
 		this.orange.setTextureWrap("REPEAT", "REPEAT");
 		

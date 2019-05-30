@@ -8,7 +8,7 @@ class MyNest extends CGFobject {
     }
     initBuffers() {
         this.twig = new MyCylinder(this.scene, 10);
-        this.egg = new MySphere(this.scene, 20, 20);
+        this.egg = new MySphere(this.scene, 20, 1, 1);
 
         this.randomAngs1 = [];
         this.randomAngs2 = [];
@@ -20,14 +20,6 @@ class MyNest extends CGFobject {
     }
     initMaterials(){
         // Texture Appearance
-        this.woodTexture = new CGFappearance(this.scene);
-        this.woodTexture.setAmbient(0.713, 0.6078, 0.298, 0.6);
-        this.woodTexture.setDiffuse(0.713, 0.6078, 0.298, 1.0);
-        this.woodTexture.setSpecular(0, 0, 0, 0.1);
-        this.woodTexture.setShininess(10.0);
-        this.woodTexture.loadTexture("images/trunk_texture.jpg");
-        this.woodTexture.setTextureWrap('REPEAT', 'REPEAT');
-
         this.eggTexture = new CGFappearance(this.scene);
         this.eggTexture.setAmbient(1.0, 1.0, 1.0, 0.6);
         this.eggTexture.setDiffuse(1.0, 1.0, 1.0, 1.0);
@@ -69,7 +61,7 @@ class MyNest extends CGFobject {
 				this.scene.rotate(-phiAng, 0.0, 0.0, 1.0);
                 this.scene.rotate(this.randomAngs1[i] + this.randomAngs2[j], 1.0, 0.0, 0.0);
                 this.scene.scale(0.02, 0.5, 0.02);
-                this.woodTexture.apply();
+                this.scene.woodText.apply();
                 this.twig.display();
                 this.scene.popMatrix();
 
@@ -79,7 +71,7 @@ class MyNest extends CGFobject {
 				this.scene.rotate(-phiAng, 0.0, 0.0, 1.0);
                 this.scene.rotate(this.randomAngs1[j] + this.randomAngs2[i], 1.0, 0.0, 0.0);
                 this.scene.scale(0.02, 0.5, 0.02);
-                this.woodTexture.apply();
+                this.scene.woodText.apply();
                 this.twig.display();
                 this.scene.popMatrix();
 
