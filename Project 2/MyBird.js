@@ -329,11 +329,20 @@ class MyBird extends CGFobject {
 
 		this.scene.rotate(Math.PI/4.0, 0.0, 0.0, 1.0);
 	}
+	setBranchPos(){
+		//this.scene.translate(0.0, -1.35, -0.15);
+		this.treeBranch.x_pos = 1.0;
+		this.treeBranch.y_pos = -1.35;
+		this.treeBranch.z_pos = -0.15;
+		this.treeBranch.orientation = Math.PI/2.0;
+		//this.scene.translate(0.0, -1.0, 0.0);
+		//this.scene.scale(0.11, 0.08, 0.21);
+	}
     display(){
 		this.scene.pushMatrix();
 		
 
-        //this.scene.translate(this.x_pos, this.y_pos + this.y_offset, this.z_pos);
+        this.scene.translate(this.x_pos, this.y_pos + this.y_offset, this.z_pos);
 		this.scene.rotate(-this.orientation, 0.0, 1.0, 0.0);
 		
 		
@@ -423,7 +432,10 @@ class MyBird extends CGFobject {
 		this.scene.popMatrix();
 		
 		if(this.treeBranch != null){
+			this.scene.pushMatrix();
+			this.setBranchPos();			
 			this.treeBranch.display();
+			this.scene.popMatrix();
 		}
 
 

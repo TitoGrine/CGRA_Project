@@ -8,7 +8,7 @@ class MyTreeBranch extends CGFobject {
         this.y_pos = 0;
         this.z_pos = this.scene.rand(-10.0, 10.0);
 
-        this.orientation = Math.PI * this.scene.rand(0.0, 360.0) / 180.0;
+        this.orientation = Math.PI * this.scene.rand(0.0, Math.PI);
 	}
 	initBuffers() {
 		this.wood = new MyCylinder(this.scene, this.side);

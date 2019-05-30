@@ -1,7 +1,7 @@
 class MyNest extends CGFobject {
     constructor(scene) {
         super(scene);
-        this.slices = 40;
+        this.slices = 30;
 
         this.initMaterials();
         this.initBuffers();
@@ -68,11 +68,11 @@ class MyNest extends CGFobject {
 				this.scene.rotate(thetaAng, 0.0, 1.0, 0.0);
 				this.scene.rotate(-phiAng, 0.0, 0.0, 1.0);
                 this.scene.rotate(this.randomAngs1[i] + this.randomAngs2[j], 1.0, 0.0, 0.0);
-                this.scene.scale(0.02, 0.5, 0.02);
+                this.scene.scale(0.03, 0.5, 0.03);
                 this.woodTexture.apply();
                 this.twig.display();
                 this.scene.popMatrix();
-
+                
                 this.scene.pushMatrix();
                 this.scene.translate(1.4 * Math.cos(thetaAng) * Math.cos(phiAng), 0.9 * -Math.sin(phiAng), 1.4 * -Math.cos(phiAng) * Math.sin(thetaAng));
 				this.scene.rotate(thetaAng, 0.0, 1.0, 0.0);
@@ -82,7 +82,7 @@ class MyNest extends CGFobject {
                 this.woodTexture.apply();
                 this.twig.display();
                 this.scene.popMatrix();
-
+                
 				thetaAng+=thetaInc;
 			}
 			phiAng += phiInc;
