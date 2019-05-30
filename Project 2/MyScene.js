@@ -86,7 +86,8 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 45, 45), vec3.fromValues(0, 0, 0));
+        //this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 45, 45), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 10, 10), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -201,16 +202,16 @@ class MyScene extends CGFscene {
 		//this.sphere.display();
 		
 		this.bird.display();
-		
+
 		if(this.activeLightning)
 			this.lightning.display();
 
         for(var i = 0; i < this.branches.length; i++)
-            this.branches[i].display();
+            //this.branches[i].display();
 		
 		
 
-		this.nest.display();
+		//this.nest.display();
 
         // ---- BEGIN Primitive drawing section
 		this.pushMatrix();
