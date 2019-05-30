@@ -30,7 +30,7 @@ class MyScene extends CGFscene {
 
 		this.y_0 = -6;
 
-		this.bird = new MyBird(this, 0.0, 4.0, 0.0, 0.0);
+		this.bird = new MyBird(this, 0.0, 5.0, 0.0, 0.0);
 		this.nest = new MyNest(this);
 		this.snow = new MySnow(this);
 	   
@@ -305,7 +305,7 @@ class MyScene extends CGFscene {
 
 		this.pushMatrix();
 		this.setTerrainPos();
-        this.terrain.display();        
+        //this.terrain.display();        
 		this.popMatrix();
 
 		this.pushMatrix();

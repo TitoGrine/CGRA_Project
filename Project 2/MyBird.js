@@ -36,11 +36,50 @@ class MyBird extends CGFobject {
 		this.leftWing = new Wing(this.scene, sideEnum.LEFT);
 	}
 	initMaterials(){
-		this.appearance = new CGFappearance(this.scene);
-		this.appearance.setAmbient(0.75, 0.45, 0.25, 1);
-		this.appearance.setDiffuse(0.75, 0.45, 0.25, 1);
-		this.appearance.setSpecular(0.75, 0.45, 0.25, 0.3);
-        this.appearance.setShininess(1);
+		this.orange = new CGFappearance(this.scene);
+		this.orange.setAmbient (0.9, 0.9, 0.9, 0.3);
+		this.orange.setDiffuse (0.9, 0.9, 0.9,  1.0);
+		this.orange.setSpecular(0.9, 0.9, 0.9,  0.1);
+		this.orange.setShininess(1);
+		//this.orange.loadTexture("images/feather_texture.jpg");
+		//this.orange.loadTexture("images/hungary.jpg");
+		this.orange.setTextureWrap("REPEAT", "REPEAT");
+		
+		this.green = new CGFappearance(this.scene);
+		this.green.setAmbient (0.1, 0.5, 0.05, 0.3);
+		this.green.setDiffuse (0.1, 0.5, 0.05,  1.0);
+		this.green.setSpecular(0.1, 0.5, 0.05,  0.1);
+		this.green.setShininess(1);
+
+		this.gold = new CGFappearance(this.scene);
+		this.gold.setAmbient (0.99, 0.7, 0.05, 0.3);
+		this.gold.setDiffuse (0.99, 0.7, 0.05,  1.0);
+		this.gold.setSpecular(0.99, 0.7, 0.05,  0.1);
+		this.gold.setShininess(1);
+
+		this.blue = new CGFappearance(this.scene);
+		this.blue.setAmbient (0.0, 0.6, 0.88, 0.3);
+		this.blue.setDiffuse (0.0, 0.6, 0.88,  1.0);
+		this.blue.setSpecular(0.0, 0.6, 0.88,  0.1);
+		this.blue.setShininess(1);
+
+		this.brown = new CGFappearance(this.scene);
+		this.brown.setAmbient (0.2, 0.0, 0.05, 0.3);
+		this.brown.setDiffuse (0.2, 0.0, 0.05,  1.0);
+		this.brown.setSpecular(0.2, 0.0, 0.05,  0.1);
+		this.brown.setShininess(1);
+
+		this.red = new CGFappearance(this.scene);
+		this.red.setAmbient (0.7, 0.0, 0.0, 0.3);
+		this.red.setDiffuse (0.7, 0.0, 0.0,  1.0);
+		this.red.setSpecular(0.7, 0.0, 0.0,  0.1);
+		this.red.setShininess(1);
+
+		this.black = new CGFappearance(this.scene);
+		this.black.setAmbient (0.1, 0.1, 0.1, 0.3);
+		this.black.setDiffuse (0.1, 0.1, 0.1,  1.0);
+		this.black.setSpecular(0.1, 0.1, 0.1,  0.1);
+		this.black.setShininess(1);
 	}
     turn(value){
 		this.orientation -= value  * this.scene.speedFactor;
@@ -62,10 +101,9 @@ class MyBird extends CGFobject {
         else
             this.velocity = 200;
 	}
-    updateWings(time){
-		this.wing_rotation = Math.cos(time / 250 * this.scene.speedFactor) * (Math.PI / 4.0 );
-        //this.wing_rotation = Math.PI/4.0 * Math.cos(((1.0+Math.abs(this.velocity))*time/250.0)*2.0*Math.PI);
-		//console.log(this.wing_rotation);    
+    updateWings(time){        
+		this.rightWing.updateWingSpan(time);
+		this.leftWing.updateWingSpan(time);
     }
     updatePos(time){
 		if(this.currentState == stateEnum.NORMAL)
@@ -158,32 +196,42 @@ class MyBird extends CGFobject {
 		this.updateWithinLimits();
 	}
     setHeadPos(){
+		this.orange.apply();
+
 		this.scene.translate(0.0, 0.8, 2.0);
         this.scene.rotate(Math.PI/4.0, 1.0, 0.0, 0.0);
 		this.scene.scale(0.5, 0.4, 0.6);
     }
     setBodyPos(){
+		this.orange.apply();
+
 		this.scene.rotate(-Math.PI/14.0, 1.0, 0.0, 0.0);
-        this.scene.scale(1.0, 0.8, 1.8);
+        this.scene.scale(1.0, 0.7, 1.8);
 	}
 	setNeckPos(){
-		this.scene.translate(0.0, 0.5, 1.5);
+		this.orange.apply();
+
+		this.scene.translate(0.0, 0.5, 1.4);
         this.scene.rotate(-Math.PI/3.5, 1.0, 0.0, 0.0);
 		this.scene.scale(0.45, 0.45, 0.8);
 	}
 	setBeakPos(){
-		this.scene.translate(0.0, 0.55, 2.4);
+		this.gold.apply();
+
+		this.scene.translate(0.0, 0.55, 2.38);
         this.scene.rotate(3.7/5.0 * Math.PI, 1.0, 0.0, 0.0);
 		this.scene.scale(0.25, 0.65, 0.15);
 	}
 	setEyePos(side){
+		this.black.apply();
+
 		switch(side){
 			case sideEnum.RIGHT:
-				this.scene.translate(0.37, 0.85, 2.3);
+				this.scene.translate(0.35, 0.85, 2.3);
 				this.scene.rotate(-Math.PI/10.0, 0.0, 0.0, 1.0);
 				break;
 			case sideEnum.LEFT:
-				this.scene.translate(-0.37, 0.85, 2.3);
+				this.scene.translate(-0.35, 0.85, 2.3);
 				this.scene.rotate(Math.PI/10.0, 0.0, 0.0, 1.0);				
 				break;
 		}
@@ -192,12 +240,14 @@ class MyBird extends CGFobject {
 		this.scene.scale(0.08, 0.08, 0.15);
 	}
 	setUpperLegPos(side){
+		this.brown.apply();
+
 		switch(side){
 			case sideEnum.RIGHT:
-				this.scene.translate(0.3, -1.1, 0.0);
+				this.scene.translate(0.3, -1.0, 0.0);
 				break;
 			case sideEnum.LEFT:
-				this.scene.translate(-0.3, -1.1, 0.0);				
+				this.scene.translate(-0.3, -1.0, 0.0);				
 				break;
 		}
 
@@ -205,12 +255,14 @@ class MyBird extends CGFobject {
 		this.scene.scale(0.09, 0.4, 0.09);
 	}
 	setLowerLegPos(side){
+		this.brown.apply();
+
 		switch(side){
 			case sideEnum.RIGHT:
-				this.scene.translate(0.3, -1.375, -0.185);
+				this.scene.translate(0.3, -1.275, -0.185);
 				break;
 			case sideEnum.LEFT:
-				this.scene.translate(-0.3, -1.375, -0.185);				
+				this.scene.translate(-0.3, -1.275, -0.185);				
 				break;
 		}
 
@@ -218,13 +270,15 @@ class MyBird extends CGFobject {
 		this.scene.scale(0.09, 0.4, 0.09);
 	}
 	setFootPos(side){
+		this.brown.apply();
+
 		switch(side){
 			case sideEnum.RIGHT:
-				this.scene.translate(0.3, -1.45, -0.15);
+				this.scene.translate(0.3, -1.35, -0.15);
 				this.scene.rotate(-Math.PI/15.0, 0.0, 0.0, 1.0);
 				break;
 			case sideEnum.LEFT:
-				this.scene.translate(-0.3, -1.45, -0.15);
+				this.scene.translate(-0.3, -1.35, -0.15);
 				this.scene.rotate(Math.PI/15.0, 0.0, 0.0, 1.0);				
 				break;
 		}
@@ -233,32 +287,40 @@ class MyBird extends CGFobject {
 		this.scene.scale(0.11, 0.08, 0.21);
 	}
     setWingPos(side){
+		this.red.apply();
+
 		switch(side){
 			case sideEnum.RIGHT:
-				this.scene.translate(0.3, -0.2, 0.0);
+				this.scene.translate(0.7, -0.0, 0.0);
 				break;
 			case sideEnum.LEFT:
-				this.scene.translate(-0.3, -0.2, 0.0);
+				this.scene.translate(-0.7, -0.0, 0.0);
 				break;
 		}
 
 		this.scene.rotate(-Math.PI/10.0, 1.0, 0.0, 0.0);
-		this.scene.scale(1.75, 1.0, 1.5);
+		this.scene.scale(1.25, 1.0, 1.5);
     }
 	setTailPos(position){
 
 		switch(position){
 			case tailEnum.UPPER:
-				this.scene.translate(0.0, 0.5, -3.9);
+				this.green.apply();
+		
+				this.scene.translate(0.0, 0.6, -3.9);
 				this.scene.rotate(-Math.PI/2.4, 1.0, 0.0, 0.0);
 				this.scene.scale(0.7, 3.0, 3.0);	
 				break;
 			case tailEnum.MIDDLE:
+				this.blue.apply();
+
 				this.scene.translate(0.0, 0.3, -4.4);
 				this.scene.rotate(-Math.PI/2.2, 1.0, 0.0, 0.0);
 				this.scene.scale(0.9, 3.5, 3.5);	
 				break;
 			case tailEnum.LOWER:
+				this.gold.apply();
+
 				this.scene.translate(0.0, -0.15, -3.7);
 				this.scene.rotate(-Math.PI/2.0, 1.0, 0.0, 0.0);
 				this.scene.scale(0.7, 3.0, 3.0);
@@ -270,9 +332,8 @@ class MyBird extends CGFobject {
     display(){
 		this.scene.pushMatrix();
 		
-		this.appearance.apply();
 
-        this.scene.translate(this.x_pos, this.y_pos + this.y_offset, this.z_pos);
+        //this.scene.translate(this.x_pos, this.y_pos + this.y_offset, this.z_pos);
 		this.scene.rotate(-this.orientation, 0.0, 1.0, 0.0);
 		
 		
