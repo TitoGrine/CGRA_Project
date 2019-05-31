@@ -30,7 +30,7 @@ class MyScene extends CGFscene {
 
 		this.y_0 = -6;
 
-		this.bird = new MyBird(this, 0.0, 5.0, 0.0, 0.0);
+		this.bird = new MyBird(this, 0.0, 3.0, 0.0, 0.0);
 		this.nest = new MyNest(this);
 		this.snow = new MySnow(this);
 	   
@@ -48,16 +48,22 @@ class MyScene extends CGFscene {
 		this.axiom = "X"; //
 		this.ruleF = "FF";
         this.ruleX = "F[-X][X]F[-X]+FX";
-		//this.ruleX1 = "F[-X][X]+X";
-		this.ruleX1 = "X+[X]-X-[X]"
-		this.ruleX2 = "XX[F[/X][X]F[\\X]+XF-[F[/X][X]F[\\X]+XF-[/X][X]+X]+XX";
+        this.ruleX1 = "F[-X][X]+X";
+        this.ruleX2 = "F[+X]-X";
+        this.ruleX3 = "F[/X][X]F[\\X]+X";
+        this.ruleX4 = "F[\X][X]/X";
+        this.ruleX5 = "F[/X]\X";
+        this.ruleX6 = "F[^X][X]F[&X]^X";
+        this.ruleX7 = "F[^X]&X";
+		this.ruleX8 = "F[&X]^X";
+		
+		
 		
 		//this.ruleX2 = "F[+X]-X";
 		// TODO: adicionar regras
 		
         this.angle = 25.0;
         this.iterations = 3;
-        this.scaleFactor = 0.5;
 		this.lightning = new MyLightning(this);
 		this.activeLightning = false;
 
@@ -66,9 +72,12 @@ class MyScene extends CGFscene {
                 this.axiom,
                 {
 					"F": [ this.ruleF ],
-					"X": [ this.ruleX,
-						   this.ruleX1,
-						   this.ruleX2 ]
+					"X": [ this.ruleX, 
+						   this.ruleX3,
+						   this.ruleX6,
+						   "F[X]XF+[\\X]",
+					       "F[X[X]+F]"
+						]
                 },
                 this.angle,
                 this.iterations,
@@ -79,16 +88,6 @@ class MyScene extends CGFscene {
 		this.doGenerate();
 
 
-
-        this.ruleX9 = "F[-X][X]+X";
-        this.ruleX10 = "F[+X]-X";
-        this.ruleX3 = "F[/X][X]F[\\X]+X";
-        this.ruleX4 = "F[\X][X]/X";
-        this.ruleX5 = "F[/X]\X";
-        this.ruleX6 = "F[^X][X]F[&X]^X";
-        this.ruleX7 = "F[^X]&X";
-		this.ruleX8 = "F[&X]^X";
-		
         this.angle = 40.0;
         this.iterations = 5;
         this.scaleFactor = 0.55;
@@ -132,11 +131,16 @@ class MyScene extends CGFscene {
         this.lights[0].setPosition(15, 2, 5, 1);
         this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.lights[0].enable();
-        this.lights[0].update();
+		this.lights[0].update();
+		this.lights[1].setPosition(15, 2, 5, 1);
+		this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
+		this.lights[1].setSpecular(1.0, 1.0, 1.0, 1.0);
+        this.lights[1].disable();
+        this.lights[1].update();
     }
     initCameras() {
-        //this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 45, 45), vec3.fromValues(0, 0, 0));
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 10, 10), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 45, 45), vec3.fromValues(0, 0, 0));
+        //this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 10, 10), vec3.fromValues(0, 0, 0));
     }
 	initMaterials(){
 		this.woodText = new CGFappearance(this);
@@ -243,18 +247,25 @@ class MyScene extends CGFscene {
 		this.snow.update(t);
 		
 		if(this.activeLightning){
-			if(this.lightning.startTime == 0)
+			if(this.lightning.startTime == 0){
 				this.lightning.startAnimation(t);
+				this.lights[1].setPosition(this.lightning.x_pos, this.lightning.y_pos, this.lightning.z_pos);
+				this.lights[1].enable();
+				this.lights[1].update();
+			}
 			if(t - this.lightning.startTime <= 1000){
 				this.lightning.update(t);
 			}
 			else{
+				this.lights[1].disable();
+				this.lights[1].update();
 				this.activeLightning = false;
 				this.lightning.startTime = 0;
 			}
 		}
     }
 
+	
     display() {
         // ---- BEGIN Background, camera and axis setup
         // Clear image and depth buffer everytime we update the scene
@@ -268,14 +279,6 @@ class MyScene extends CGFscene {
 
         // Draw axis
 		//this.axis.display();
-		
-		var sca = [this.scaleFactor, 0.0, 0.0, 0.0,
-					0.0, this.scaleFactor, 0.0, 0.0,
-					0.0, 0.0, this.scaleFactor, 0.0,
-					0.0, 0.0, 0.0, 1.0];
-		
-			this.multMatrix(sca);
-
 
         //Apply default appearance
 		this.setDefaultAppearance();
@@ -286,7 +289,7 @@ class MyScene extends CGFscene {
 			this.lightning.display();
 
         for(var i = 0; i < this.branches.length; i++)
-            //this.branches[i].display();
+            this.branches[i].display();
 		
 		for(let i = 0; i < this.trees.length; i++)
 			//this.trees[i].display();
@@ -305,7 +308,7 @@ class MyScene extends CGFscene {
 
 		this.pushMatrix();
 		this.setTerrainPos();
-        //this.terrain.display();        
+        this.terrain.display();        
 		this.popMatrix();
 
 		this.pushMatrix();

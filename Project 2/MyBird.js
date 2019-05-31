@@ -16,6 +16,7 @@ class MyBird extends CGFobject {
 		this.y_offset = 0;
 		this.currentState = stateEnum.NORMAL;
 		this.vertical_osc = 0.5;
+        this.scaleFactor = 1;
 
 		this.treeBranch = null;
 		
@@ -333,8 +334,11 @@ class MyBird extends CGFobject {
 		this.scene.pushMatrix();
 		
 
-        //this.scene.translate(this.x_pos, this.y_pos + this.y_offset, this.z_pos);
+        this.scene.translate(this.x_pos, this.y_pos + this.y_offset, this.z_pos);
 		this.scene.rotate(-this.orientation, 0.0, 1.0, 0.0);
+		this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
+		this.scene.scale(0.25, 0.25, 0.25);
+	
 		
 		
         this.scene.pushMatrix();

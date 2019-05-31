@@ -66,7 +66,6 @@ class MyLightning extends MyLSystem {
 		this.scene.translate(this.x_pos, 30, this.z_pos);
 		this.scene.rotate(Math.PI, 0, 0, 1);
 
-        this.scene.scale(this.scale, this.scale, this.scale);
 
 		var i;
 		let primitiveCount = 0;
@@ -128,7 +127,7 @@ class MyLightning extends MyLSystem {
                     {
 						primitiveCount++;
 						this.scene.pushMatrix();
-						this.scene.scale(0.3, 1, 1);
+						this.scene.scale(0.2, 1, 1);
 						this.lightningAppearance.apply();
 						primitive.display();
 						this.scene.popMatrix();
