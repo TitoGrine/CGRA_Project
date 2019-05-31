@@ -1,10 +1,15 @@
 class MyNest extends CGFobject {
-    constructor(scene) {
+    constructor(scene, x, z) {
         super(scene);
         this.slices = 30;
 
+        this.x_pos = x;
+        this.z_pos = z;
+        this.twigs_caught = [];
+
         this.initMaterials();
         this.initBuffers();
+
     }
     initBuffers() {
         this.twig = new MyCylinder(this.scene, 10);
@@ -50,7 +55,9 @@ class MyNest extends CGFobject {
         var thetaAng = 0;
 		var phiAng = 0;
 		var thetaInc = 2.0 * Math.PI / this.slices;
-		var phiInc = (Math.PI / 2.0) / this.slices;
+        var phiInc = (Math.PI / 2.0) / this.slices;
+        
+        this.scene.translate(this.x_pos, 0.0, this.z_pos);
 
 		for(var j = 0; j <= this.slices; j++){
 			for(var i = 0; i <= this.slices; i++){
