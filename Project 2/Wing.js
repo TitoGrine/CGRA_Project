@@ -24,16 +24,15 @@ class Wing extends CGFobject {
     }
     setBasePos(){
         this.scene.rotate(this.orientation * this.inner_wing_rotation, 0.0, 0.0, 1.0);
-        this.scene.rotate(this.orientation * (Math.PI/6.0 - Math.PI/15.0), 0.0, 0.0, 1.0);
+        this.scene.rotate(this.orientation * (Math.PI/6.0 - Math.PI/10.0), 0.0, 0.0, 1.0);
         this.scene.scale(this.orientation, this.orientation, this.orientation);
         this.scene.translate(1.0, 0.0, 0.0);
         this.scene.rotate(-this.orientation * Math.PI/2.0, 1.0, 0.0, 0.0);
         this.scene.scale(2.0, 1.5, 1.5);
     }
     setTipPos(){
-        this.scene.translate(this.orientation * 2.0 * Math.cos(this.inner_wing_rotation + (Math.PI/6.0 - Math.PI/15.0)), 2.0 * Math.sin(this.inner_wing_rotation + (Math.PI/6.0 - Math.PI/15.0)), 0.0);
-        this.scene.rotate(-this.orientation * (- 6.0 * this.outter_wing_rotation + Math.PI/3.0)/ 5.0, 0.0, 0.0, 1.0);
-        //this.scene.rotate((-this.orientation * (this.inner_wing_rotation + Math.PI)/ 5.0) - Math.PI/15.0, 0.0, 0.0, 1.0);
+        this.scene.translate(this.orientation * 2.0 * Math.cos(this.inner_wing_rotation + (Math.PI/6.0 - Math.PI/10.0)), 2.0 * Math.sin(this.inner_wing_rotation + (Math.PI/6.0 - Math.PI/10.0)), 0.0);
+        this.scene.rotate(-this.orientation * (- 6.5 * this.outter_wing_rotation + Math.PI/6.0)/ 5.0, 0.0, 0.0, 1.0);
         this.scene.translate(this.orientation * 1.5 , 0.0, 0.0);
         this.scene.scale(this.orientation * 1.5,  -1.0, 3.0/4.0);
         this.scene.rotate( Math.PI/2.0, 1.0, 0.0, 0.0);

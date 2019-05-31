@@ -136,12 +136,15 @@ class MyBird extends CGFobject {
 		}
 	}
 	dropBranch(){
+
+		if(!this.insideBounds(this.scene.nest.x_pos, this.scene.nest.z_pos))
+			return;
+
 		this.treeBranch.y_pos += 1;
 		this.treeBranch.x_pos += this.x_pos;
 		this.treeBranch.z_pos += this.z_pos;
 		this.treeBranch.orientation += this.orientation;
-		this.scene.branches.push(this.treeBranch);
-		this.scene.nBranches++;
+		this.scene.nest.twigs_caught.push(this.treeBranch);
 		this.treeBranch = null;
 	}
 	updateState(pKeyPressed){
@@ -172,11 +175,11 @@ class MyBird extends CGFobject {
 	}
 
 	updateWithinLimits(){
-		if(this.x_pos > 15) this.x_pos = 15;
-		if(this.z_pos > 11) this.z_pos = 11;
+		if(this.x_pos > 10) this.x_pos = 10;
+		if(this.z_pos > 10) this.z_pos = 10;
 
-		if(this.x_pos < -12) this.x_pos = -12;
-		if(this.z_pos < -14) this.z_pos = -14;
+		if(this.x_pos < -10) this.x_pos = -10;
+		if(this.z_pos < -10) this.z_pos = -10;
 	}
 
     update(time){
@@ -330,6 +333,12 @@ class MyBird extends CGFobject {
 
 		this.scene.rotate(Math.PI/4.0, 0.0, 0.0, 1.0);
 	}
+	setBranchPos(){
+		this.treeBranch.x_pos = 0.75;
+		this.treeBranch.y_pos = -1.35;
+		this.treeBranch.z_pos = -0.15;
+		this.treeBranch.orientation = Math.PI/2.0;
+	}
     display(){
 		this.scene.pushMatrix();
 		
@@ -427,7 +436,10 @@ class MyBird extends CGFobject {
 		this.scene.popMatrix();
 		
 		if(this.treeBranch != null){
+			this.scene.pushMatrix();
+			this.setBranchPos();			
 			this.treeBranch.display();
+			this.scene.popMatrix();
 		}
 
 

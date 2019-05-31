@@ -30,8 +30,13 @@ class MyScene extends CGFscene {
 
 		this.y_0 = -6;
 
+<<<<<<< HEAD
 		this.bird = new MyBird(this, 0.0, 3.0, 0.0, 0.0);
 		this.nest = new MyNest(this);
+=======
+		this.bird = new MyBird(this, 0.0, 5.0, 0.0, 0.0);
+		this.nest = new MyNest(this, -8.0, 5.0);
+>>>>>>> 26b3938405b7b3d624aa382bc26bfce9cd1ab73b
 		this.snow = new MySnow(this);
 	   
 		this.nBranches = 5;
@@ -292,12 +297,12 @@ class MyScene extends CGFscene {
             this.branches[i].display();
 		
 		for(let i = 0; i < this.trees.length; i++)
-			//this.trees[i].display();
+			this.trees[i].display();
 
 		
 		this.pushMatrix();
 		this.setNestPosition();
-		//this.nest.display();
+		this.nest.display();
 		this.popMatrix();
 
 		// ---- BEGIN Primitive drawing section

@@ -1,10 +1,15 @@
 class MyNest extends CGFobject {
-    constructor(scene) {
+    constructor(scene, x, z) {
         super(scene);
-        this.slices = 40;
+        this.slices = 30;
+
+        this.x_pos = x;
+        this.z_pos = z;
+        this.twigs_caught = [];
 
         this.initMaterials();
         this.initBuffers();
+
     }
     initBuffers() {
         this.twig = new MyCylinder(this.scene, 10);
@@ -50,7 +55,9 @@ class MyNest extends CGFobject {
         var thetaAng = 0;
 		var phiAng = 0;
 		var thetaInc = 2.0 * Math.PI / this.slices;
-		var phiInc = (Math.PI / 2.0) / this.slices;
+        var phiInc = (Math.PI / 2.0) / this.slices;
+        
+        this.scene.translate(this.x_pos, 0.0, this.z_pos);
 
 		for(var j = 0; j <= this.slices; j++){
 			for(var i = 0; i <= this.slices; i++){
@@ -60,11 +67,11 @@ class MyNest extends CGFobject {
 				this.scene.rotate(thetaAng, 0.0, 1.0, 0.0);
 				this.scene.rotate(-phiAng, 0.0, 0.0, 1.0);
                 this.scene.rotate(this.randomAngs1[i] + this.randomAngs2[j], 1.0, 0.0, 0.0);
-                this.scene.scale(0.02, 0.5, 0.02);
+                this.scene.scale(0.03, 0.5, 0.03);
                 this.scene.woodText.apply();
                 this.twig.display();
                 this.scene.popMatrix();
-
+                
                 this.scene.pushMatrix();
                 this.scene.translate(1.4 * Math.cos(thetaAng) * Math.cos(phiAng), 0.9 * -Math.sin(phiAng), 1.4 * -Math.cos(phiAng) * Math.sin(thetaAng));
 				this.scene.rotate(thetaAng, 0.0, 1.0, 0.0);
@@ -74,7 +81,7 @@ class MyNest extends CGFobject {
                 this.scene.woodText.apply();
                 this.twig.display();
                 this.scene.popMatrix();
-
+                
 				thetaAng+=thetaInc;
 			}
 			phiAng += phiInc;
