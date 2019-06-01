@@ -6,8 +6,15 @@
 class MyLPlant extends MyLSystem {
 	constructor(scene) {
 		super(scene);
-		this.x_pos = this.scene.rand(-10.0, 10.0);
-		this.z_pos = this.scene.rand(-10.0, 10.0);
+
+		if(Math.round(this.scene.rand(0, 1))){
+			this.x_pos = this.scene.rand(-10.0, 0.0);
+			this.z_pos = this.scene.rand(-10.0, 3.5);
+		}
+		else{
+			this.x_pos = this.scene.rand(-6.0, 9.5);
+			this.z_pos = this.scene.rand(-4.0, 8.5);
+		}
     }
 
     // cria o lexico da gramática

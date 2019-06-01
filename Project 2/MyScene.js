@@ -30,13 +30,8 @@ class MyScene extends CGFscene {
 
 		this.y_0 = -6;
 
-<<<<<<< HEAD
-		this.bird = new MyBird(this, 0.0, 3.0, 0.0, 0.0);
-		this.nest = new MyNest(this);
-=======
 		this.bird = new MyBird(this, 0.0, 5.0, 0.0, 0.0);
-		this.nest = new MyNest(this, -8.0, 5.0);
->>>>>>> 26b3938405b7b3d624aa382bc26bfce9cd1ab73b
+		this.nest = new MyNest(this, -8.0, 0.5, 6.0, 0.5);
 		this.snow = new MySnow(this);
 	   
 		this.nBranches = 5;
@@ -98,7 +93,7 @@ class MyScene extends CGFscene {
         this.scaleFactor = 0.55;
 
 		this.trees = [];
-		this.numberTrees = 10;
+		this.numberTrees = 25;
 		for(let i = 0; i < this.numberTrees; i++){
 			this.trees[i] = new MyLPlant(this);
 			this.doGenerate = function () {
@@ -138,8 +133,8 @@ class MyScene extends CGFscene {
         this.lights[0].enable();
 		this.lights[0].update();
 		this.lights[1].setPosition(15, 2, 5, 1);
-		this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
-		this.lights[1].setSpecular(1.0, 1.0, 1.0, 1.0);
+		this.lights[1].setDiffuse(0.68, 0.85, 0.9, 1.0);
+		this.lights[1].setSpecular(0.68, 0.85, 0.9, 1.0);
         this.lights[1].disable();
         this.lights[1].update();
     }
@@ -183,10 +178,6 @@ class MyScene extends CGFscene {
 	setHousePos(){
 		this.translate(4, 0, -6);
 		this.scale(1/3, 1/3, 1/3);
-	}
-
-	setNestPosition(){
-		this.translate(0, 1, 0);
 	}
 
 	rand(min, max) {
@@ -301,7 +292,6 @@ class MyScene extends CGFscene {
 
 		
 		this.pushMatrix();
-		this.setNestPosition();
 		this.nest.display();
 		this.popMatrix();
 

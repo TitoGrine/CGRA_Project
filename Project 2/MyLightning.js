@@ -55,9 +55,9 @@ class MyLightning extends MyLSystem {
 	}
 	initAppearance(){
 		this.lightningAppearance = new CGFappearance(this.scene);
-        this.lightningAppearance.setAmbient(0.9, 0.9, 0.9, 0.4);
-        this.lightningAppearance.setDiffuse(0.9, 0.9, 0.9, 0.4);
-        this.lightningAppearance.setSpecular(0.9, 0.9, 0.9, 1.0);
+        this.lightningAppearance.setAmbient(0.68, 0.85, 0.9, 0.4);
+        this.lightningAppearance.setDiffuse(0.68, 0.85, 0.9, 0.4);
+        this.lightningAppearance.setSpecular(0.68, 0.85, 0.9, 1.0);
         this.lightningAppearance.setShininess(10.0);
 	}
 	display(){

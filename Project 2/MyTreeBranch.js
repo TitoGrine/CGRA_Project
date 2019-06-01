@@ -4,9 +4,16 @@ class MyTreeBranch extends CGFobject {
 		this.side = 10;
         this.initBuffers();
         
-        this.x_pos = this.scene.rand(-10.0, 10.0);
         this.y_pos = 0;
-        this.z_pos = this.scene.rand(-10.0, 10.0);
+
+        if(Math.round(this.scene.rand(0, 1))){
+			this.x_pos = this.scene.rand(-10.0, 0.0);
+			this.z_pos = this.scene.rand(-10.0, 3.0);
+		}
+		else{
+			this.x_pos = this.scene.rand(-6.0, 9.5);
+			this.z_pos = this.scene.rand(-4.0, 8.5);
+		}
 
         this.orientation = Math.PI * this.scene.rand(0.0, Math.PI);
 	}

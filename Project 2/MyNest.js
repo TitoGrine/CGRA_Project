@@ -1,10 +1,12 @@
 class MyNest extends CGFobject {
-    constructor(scene, x, z) {
+    constructor(scene, x, y, z, scaling) {
         super(scene);
         this.slices = 30;
 
         this.x_pos = x;
+        this.y_pos = y;
         this.z_pos = z;
+        this.scale_factor = scaling;
         this.twigs_caught = [];
 
         this.initMaterials();
@@ -12,15 +14,15 @@ class MyNest extends CGFobject {
 
     }
     initBuffers() {
-        this.twig = new MyCylinder(this.scene, 10);
+        this.twig = new MyCylinder(this.scene, 5);
         this.egg = new MySphere(this.scene, 20, 1, 1);
 
         this.randomAngs1 = [];
         this.randomAngs2 = [];
 
         for(var i = 0; i < this.slices; i++){
-            this.randomAngs1.push(this.rand(0.0, Math.PI));
-            this.randomAngs2.push(this.rand(0.0, Math.PI));
+            this.randomAngs1.push(this.scene.rand(0.0, Math.PI));
+            this.randomAngs2.push(this.scene.rand(0.0, Math.PI));
         }
     }
     initMaterials(){
@@ -48,16 +50,17 @@ class MyNest extends CGFobject {
         this.scene.rotate(Math.PI / 3.0, 1.0 , 0.0, 0.0);
         this.scene.scale(0.35, 0.5, 0.35);
     }
-    rand(min, max) {
-		return Math.random() * (max - min) + min;
-	}
     display(){
         var thetaAng = 0;
 		var phiAng = 0;
 		var thetaInc = 2.0 * Math.PI / this.slices;
         var phiInc = (Math.PI / 2.0) / this.slices;
         
-        this.scene.translate(this.x_pos, 0.0, this.z_pos);
+        this.scene.translate(this.x_pos, this.y_pos, this.z_pos);
+        this.scene.scale(this.scale_factor, this.scale_factor, this.scale_factor);
+
+        for(var i = 0; i < this.twigs_caught.length; i++)
+            this.twigs_caught[i].display();
 
 		for(var j = 0; j <= this.slices; j++){
 			for(var i = 0; i <= this.slices; i++){

@@ -4,9 +4,12 @@
  * @param scene - Reference to MyScene object
  */
 class MyTriangle extends CGFobject {
-	constructor(scene) {
+	constructor(scene, x_scale, y_scale) {
 		super(scene);
 		this.initBuffers();
+
+		this.x_scale = x_scale;
+		this.y_scale = y_scale;
 	}
 	initBuffers() {
 		this.vertices = [
@@ -56,9 +59,9 @@ class MyTriangle extends CGFobject {
         */
 
 	   this.texCoords = [
-		0.0, 0.5,
-		0.0, 1.0,
-		0.0, 0.5
+		0.5, 0.5,
+		1.0, 0.0,
+		0.0, 0.0,
 	]
 
 		this.primitiveType = this.scene.gl.TRIANGLES;

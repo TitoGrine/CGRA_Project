@@ -9,7 +9,8 @@ class MyBird extends CGFobject {
 		this.y_pos = y;
 		this.y_inicial = y;
         this.z_pos = z;
-        this.orientation = ang;
+		this.orientation = ang;
+		this.tilt = 0;
         this.wing_rotation = 0;
 		this.velocity = 0;
 		this.velocity_y = 0;
@@ -24,26 +25,25 @@ class MyBird extends CGFobject {
 		this.initMaterials();
     }
     initBuffers(){
-		this.body = new MySphere(this.scene, 20, 20, 20);
-		this.neck = new MySphere(this.scene, 20, 20, 20);
-		this.head = new MySphere(this.scene, 20, 20, 20);
+		this.body = new MySphere(this.scene, 10, 10, 10);
+		this.neck = new MySphere(this.scene, 10, 10, 10);
+		this.head = new MySphere(this.scene, 10, 10, 10);
 		this.beak = new MyCone(this.scene, 10, 10);
-		this.eye = new MySphere(this.scene, 20, 1, 1);
+		this.eye = new MySphere(this.scene, 10, 1, 1);
 		this.tail = new MyTriangle(this.scene);
-		this.upperLeg = new MyCylinder(this.scene, 10);
-		this.lowerLeg = new MyCylinder(this.scene, 10);
-		this.foot = new MySphere(this.scene, 20, 1, 1);
+		this.upperLeg = new MyCylinder(this.scene, 5);
+		this.lowerLeg = new MyCylinder(this.scene, 5);
+		this.foot = new MySphere(this.scene, 10, 1, 1);
 		this.rightWing = new Wing(this.scene, sideEnum.RIGHT);
 		this.leftWing = new Wing(this.scene, sideEnum.LEFT);
 	}
 	initMaterials(){
 		this.orange = new CGFappearance(this.scene);
-		this.orange.setAmbient (0.9, 0.9, 0.9, 0.3);
-		this.orange.setDiffuse (0.9, 0.9, 0.9,  1.0);
-		this.orange.setSpecular(0.9, 0.9, 0.9,  0.1);
+		this.orange.setAmbient (0.7, 0.25, 0.1, 0.3);
+		this.orange.setDiffuse (0.7, 0.25, 0.1,  1.0);
+		this.orange.setSpecular(0.7, 0.25, 0.1,  0.1);
 		this.orange.setShininess(1);
-		this.orange.loadTexture("images/feather_texture2.jpg");
-		//this.orange.loadTexture("images/hungary.jpg");
+		this.orange.loadTexture("images/feather_texture.jpg");
 		this.orange.setTextureWrap("REPEAT", "REPEAT");
 		
 		this.green = new CGFappearance(this.scene);
@@ -51,11 +51,21 @@ class MyBird extends CGFobject {
 		this.green.setDiffuse (0.1, 0.5, 0.05,  1.0);
 		this.green.setSpecular(0.1, 0.5, 0.05,  0.1);
 		this.green.setShininess(1);
+		this.green.loadTexture("images/feather_texture.jpg");
+		this.green.setTextureWrap("REPEAT", "REPEAT");
+
+		this.yellow = new CGFappearance(this.scene);
+		this.yellow.setAmbient (0.99, 0.7, 0.05, 0.3);
+		this.yellow.setDiffuse (0.99, 0.7, 0.05,  1.0);
+		this.yellow.setSpecular(0.99, 0.7, 0.05,  0.1);
+		this.yellow.setShininess(1);
+		this.yellow.loadTexture("images/feather_texture.jpg");
+		this.yellow.setTextureWrap("REPEAT", "REPEAT");
 
 		this.gold = new CGFappearance(this.scene);
-		this.gold.setAmbient (0.99, 0.7, 0.05, 0.3);
-		this.gold.setDiffuse (0.99, 0.7, 0.05,  1.0);
-		this.gold.setSpecular(0.99, 0.7, 0.05,  0.1);
+		this.gold.setAmbient (0.85, 0.6, 0.05, 0.3);
+		this.gold.setDiffuse (0.85, 0.6, 0.05,  1.0);
+		this.gold.setSpecular(0.85, 0.6, 0.05,  0.1);
 		this.gold.setShininess(1);
 
 		this.blue = new CGFappearance(this.scene);
@@ -63,6 +73,8 @@ class MyBird extends CGFobject {
 		this.blue.setDiffuse (0.0, 0.6, 0.88,  1.0);
 		this.blue.setSpecular(0.0, 0.6, 0.88,  0.1);
 		this.blue.setShininess(1);
+		this.blue.loadTexture("images/feather_texture.jpg");
+		this.blue.setTextureWrap("REPEAT", "REPEAT");
 
 		this.brown = new CGFappearance(this.scene);
 		this.brown.setAmbient (0.2, 0.0, 0.05, 0.3);
@@ -75,11 +87,13 @@ class MyBird extends CGFobject {
 		this.red.setDiffuse (0.7, 0.0, 0.0,  1.0);
 		this.red.setSpecular(0.7, 0.0, 0.0,  0.1);
 		this.red.setShininess(1);
+		this.red.loadTexture("images/feather_texture.jpg");
+		this.red.setTextureWrap("REPEAT", "REPEAT");
 
 		this.black = new CGFappearance(this.scene);
-		this.black.setAmbient (0.1, 0.1, 0.1, 0.3);
-		this.black.setDiffuse (0.1, 0.1, 0.1,  1.0);
-		this.black.setSpecular(0.1, 0.1, 0.1,  0.1);
+		this.black.setAmbient (0.2, 0.2, 0.2, 0.3);
+		this.black.setDiffuse (0.2, 0.2, 0.2,  1.0);
+		this.black.setSpecular(0.2, 0.2, 0.2,  0.1);
 		this.black.setShininess(1);
 	}
     turn(value){
@@ -93,14 +107,14 @@ class MyBird extends CGFobject {
         this.z_pos = 0;
 	}
 	accelarate(value){
-        if(Math.abs(this.velocity) + value < 200){
+        if(Math.abs(this.velocity) + value < 100){
             if(value > 0)
-            	this.velocity += 0.2 * this.scene.speedFactor;
+            	this.velocity += 0.1 * this.scene.speedFactor;
             else if(value < 0)
-            	this.velocity -= 0.2 * this.scene.speedFactor;
+            	this.velocity -= 0.1 * this.scene.speedFactor;
         }
         else
-            this.velocity = 200;
+            this.velocity = 100;
 	}
     updateWings(time){        
 		this.rightWing.updateWingSpan(time);
@@ -114,7 +128,7 @@ class MyBird extends CGFobject {
 	}
 	insideBounds(x, z){
 		// TODO: ver limites
-		return ((this.x_pos + 2 > x) && (this.x_pos - 2 < x)) && ((this.z_pos + 2 > z) && (this.z_pos - 2 < z));
+		return ((this.x_pos + 1 > x) && (this.x_pos - 1 < x)) && ((this.z_pos + 1 > z) && (this.z_pos - 1 < z));
 	}
 	pickUpBranch(){
 		console.log("bird: x:" + this.x_pos + "z: " + this.z_pos);
@@ -140,9 +154,9 @@ class MyBird extends CGFobject {
 		if(!this.insideBounds(this.scene.nest.x_pos, this.scene.nest.z_pos))
 			return;
 
-		this.treeBranch.y_pos += 1;
-		this.treeBranch.x_pos += this.x_pos;
-		this.treeBranch.z_pos += this.z_pos;
+		this.treeBranch.x_pos = 0.0;
+		this.treeBranch.y_pos = -0.3;
+		this.treeBranch.z_pos = 0;
 		this.treeBranch.orientation += this.orientation;
 		this.scene.nest.twigs_caught.push(this.treeBranch);
 		this.treeBranch = null;
@@ -154,6 +168,7 @@ class MyBird extends CGFobject {
 					this.currentState = stateEnum.DOWN;
 					this.velocity_y = -2 * this.y_pos / 40;
 				}
+				this.tilt = 0;
 				break;
 			case stateEnum.DOWN:
 				if(this.y_pos <= 1){
@@ -163,17 +178,23 @@ class MyBird extends CGFobject {
 						this.pickUpBranch();
 					this.currentState = stateEnum.UP;
 					this.velocity_y =  -this.velocity_y;
+					this.tilt = 0;
 				}
+
+				if(this.velocity != 0)
+					this.tilt = -Math.PI/14.0 + Math.acos(Math.pow(Math.abs(this.velocity), 2.0)/(0.01 + Math.pow(Math.abs(this.velocity), 2.0) + Math.pow(Math.abs(this.velocity_y), 2.0)));
 				break;
 			case stateEnum.UP:
 				if(this.y_pos >= this.y_inicial){
 					this.currentState = stateEnum.NORMAL;
 					this.velocity_y = 0;
 				}
+
+				if(this.velocity != 0)
+					this.tilt = 2.0 * Math.PI/14.0 - Math.acos(Math.pow(Math.abs(this.velocity), 2.0)/(0.01 + Math.pow(Math.abs(this.velocity), 2.0) + Math.pow(Math.abs(this.velocity_y), 2.0)));				
 				break;
 		}
 	}
-
 	updateWithinLimits(){
 		if(this.x_pos > 10) this.x_pos = 10;
 		if(this.z_pos > 10) this.z_pos = 10;
@@ -181,7 +202,6 @@ class MyBird extends CGFobject {
 		if(this.x_pos < -10) this.x_pos = -10;
 		if(this.z_pos < -10) this.z_pos = -10;
 	}
-
     update(time){
         this.scene.pushMatrix();
         this.updateWings(time);
@@ -313,21 +333,21 @@ class MyBird extends CGFobject {
 		
 				this.scene.translate(0.0, 0.6, -3.9);
 				this.scene.rotate(-Math.PI/2.4, 1.0, 0.0, 0.0);
-				this.scene.scale(0.7, 3.0, 3.0);	
+				this.scene.scale(1.0, 3.0, 3.0);	
 				break;
 			case tailEnum.MIDDLE:
 				this.blue.apply();
 
 				this.scene.translate(0.0, 0.3, -4.4);
 				this.scene.rotate(-Math.PI/2.2, 1.0, 0.0, 0.0);
-				this.scene.scale(0.9, 3.5, 3.5);	
+				this.scene.scale(1.0, 3.5, 3.5);	
 				break;
 			case tailEnum.LOWER:
-				this.gold.apply();
+				this.yellow.apply();
 
 				this.scene.translate(0.0, -0.15, -3.7);
 				this.scene.rotate(-Math.PI/2.0, 1.0, 0.0, 0.0);
-				this.scene.scale(0.7, 3.0, 3.0);
+				this.scene.scale(1.0, 3.0, 3.0);
 				break;
 		}
 
@@ -335,20 +355,26 @@ class MyBird extends CGFobject {
 	}
 	setBranchPos(){
 		this.treeBranch.x_pos = 0.75;
-		this.treeBranch.y_pos = -1.35;
+		this.treeBranch.y_pos = -0.35 * this.scaleFactor;
 		this.treeBranch.z_pos = -0.15;
 		this.treeBranch.orientation = Math.PI/2.0;
 	}
     display(){
 		this.scene.pushMatrix();
-		
 
-        this.scene.translate(this.x_pos, this.y_pos + this.y_offset, this.z_pos);
+        this.scene.translate(this.x_pos, this.y_pos /*+ this.y_offset*/, this.z_pos);
 		this.scene.rotate(-this.orientation, 0.0, 1.0, 0.0);
+		this.scene.rotate(this.tilt, 1.0, 0.0, 0.0);
+
+		if(this.treeBranch != null){
+			this.scene.pushMatrix();
+			this.setBranchPos();			
+			this.treeBranch.display();
+			this.scene.popMatrix();
+		}
+
 		this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
 		this.scene.scale(0.25, 0.25, 0.25);
-	
-		
 		
         this.scene.pushMatrix();
         this.setBodyPos();
@@ -435,16 +461,6 @@ class MyBird extends CGFobject {
         this.leftWing.display();
 		this.scene.popMatrix();
 		
-		if(this.treeBranch != null){
-			this.scene.pushMatrix();
-			this.setBranchPos();			
-			this.treeBranch.display();
-			this.scene.popMatrix();
-		}
-
-
 		this.scene.popMatrix();
-		
-		
     }
 }

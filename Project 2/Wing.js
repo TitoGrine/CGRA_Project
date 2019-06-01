@@ -7,7 +7,7 @@ class Wing extends CGFobject {
         this.wing_rotation = 0;
     }
     initBuffers(){
-        this.wingbase = new MyQuad(this.scene);
+        this.wingbase = new MyQuad(this.scene, 1.0, 1.0);
         this.wingtip = new MyTriangle(this.scene);
     }
     initMaterials(){
