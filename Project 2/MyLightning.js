@@ -55,8 +55,8 @@ class MyLightning extends MyLSystem {
 	}
 	initAppearance(){
 		this.lightningAppearance = new CGFappearance(this.scene);
-        this.lightningAppearance.setAmbient(0.68, 0.85, 0.9, 0.4);
-        this.lightningAppearance.setDiffuse(0.68, 0.85, 0.9, 0.4);
+        this.lightningAppearance.setAmbient(0.68, 0.85, 0.9, 1.0);
+        this.lightningAppearance.setDiffuse(0.68, 0.85, 0.9, 0.7);
         this.lightningAppearance.setSpecular(0.68, 0.85, 0.9, 1.0);
         this.lightningAppearance.setShininess(10.0);
 	}
@@ -130,8 +130,6 @@ class MyLightning extends MyLSystem {
 						this.scene.pushMatrix();
 						this.scene.scale(0.1, 1, 1);
 						this.scene.translate(0.5, 0.5, 0);
-						primitive.display();
-						this.scene.rotate(Math.PI, 0, 1, 0);
 						primitive.display();
 						this.scene.popMatrix();
 						this.scene.translate(0, 1, 0);
