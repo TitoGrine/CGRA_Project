@@ -14,6 +14,7 @@ class MyBird extends CGFobject {
         this.wing_rotation = 0;
 		this.velocity = 0;
 		this.velocity_y = 0;
+		this.previous_t = 0;
 		this.y_offset = 0;
 		this.currentState = stateEnum.NORMAL;
 		this.vertical_osc = 0.5;
@@ -131,12 +132,9 @@ class MyBird extends CGFobject {
 		return ((this.x_pos + 1 > x) && (this.x_pos - 1 < x)) && ((this.z_pos + 1 > z) && (this.z_pos - 1 < z));
 	}
 	pickUpBranch(){
-		console.log("bird: x:" + this.x_pos + "z: " + this.z_pos);
 
 		for(let i = 0; i < this.scene.nBranches; i++){
-			console.log("branch: x:" + this.scene.branches[i].x_pos + "z: " + this.scene.branches[i].z_pos);
 			if(this.insideBounds(this.scene.branches[i].x_pos, this.scene.branches[i].z_pos)){
-				console.log("pick up");
 				this.treeBranch = this.scene.branches[i];
 				this.scene.branches.splice(i, 1);
 				this.scene.nBranches--;
@@ -166,7 +164,7 @@ class MyBird extends CGFobject {
 			case stateEnum.NORMAL:
 				if(pKeyPressed){
 					this.currentState = stateEnum.DOWN;
-					this.velocity_y = -2 * this.y_pos / 40;
+					this.velocity_y = -this.y_pos / 1000;
 				}
 				this.tilt = 0;
 				break;
@@ -207,15 +205,16 @@ class MyBird extends CGFobject {
         this.updateWings(time);
         this.updatePos(time);
         this.scene.popMatrix();
-		
-		// TODO: Por tempo correto na descida e subida
+				
 		var desloc = [-Math.sin(this.orientation) * this.velocity, this.velocity_y, Math.cos(this.orientation) * this.velocity];
 
 		this.updateState(false);
 
 		this.x_pos += desloc[0];
-		this.y_pos += desloc[1];
+		this.y_pos += desloc[1] * (time - this.previous_t);
 		this.z_pos += desloc[2];
+
+		this.previous_t = time;
 
 		this.updateWithinLimits();
 	}
