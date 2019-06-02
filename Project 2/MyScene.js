@@ -93,7 +93,7 @@ class MyScene extends CGFscene {
         this.scaleFactor = 0.55;
 
 		this.trees = [];
-		this.numberTrees = 25;
+		this.numberTrees = 10;
 		for(let i = 0; i < this.numberTrees; i++){
 			this.trees[i] = new MyLPlant(this);
 			this.doGenerate = function () {
@@ -139,7 +139,7 @@ class MyScene extends CGFscene {
         this.lights[1].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 45, 45), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 60, 45), vec3.fromValues(0, 0, 0));
         //this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 10, 10), vec3.fromValues(0, 0, 0));
     }
 	initMaterials(){
@@ -281,17 +281,24 @@ class MyScene extends CGFscene {
         //Apply default appearance
 		this.setDefaultAppearance();
 		
-		this.bird.display();
-
+		this.pushMatrix();		
 		if(this.activeLightning)
 			this.lightning.display();
+		this.popMatrix();
 
+		this.pushMatrix();		
         for(var i = 0; i < this.branches.length; i++)
             this.branches[i].display();
+		this.popMatrix();
 		
+		this.pushMatrix();		
 		for(let i = 0; i < this.trees.length; i++)
 			this.trees[i].display();
+		this.popMatrix();
 
+		this.pushMatrix();		
+		this.bird.display();		
+		this.popMatrix();
 		
 		this.pushMatrix();
 		this.nest.display();

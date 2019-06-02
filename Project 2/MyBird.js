@@ -180,7 +180,7 @@ class MyBird extends CGFobject {
 				}
 
 				if(this.velocity != 0)
-					this.tilt = -Math.PI/14.0 + Math.acos(Math.pow(Math.abs(this.velocity), 2.0)/(0.01 + Math.pow(Math.abs(this.velocity), 2.0) + Math.pow(Math.abs(this.velocity_y), 2.0)));
+					this.tilt = Math.acos(Math.pow(Math.abs(this.velocity), 2.0)/(0.01 + Math.pow(Math.abs(this.velocity), 2.0) + Math.pow(Math.abs(this.velocity_y), 2.0)));
 				break;
 			case stateEnum.UP:
 				if(this.y_pos >= this.y_inicial){
@@ -189,7 +189,7 @@ class MyBird extends CGFobject {
 				}
 
 				if(this.velocity != 0)
-					this.tilt = 2.0 * Math.PI/14.0 - Math.acos(Math.pow(Math.abs(this.velocity), 2.0)/(0.01 + Math.pow(Math.abs(this.velocity), 2.0) + Math.pow(Math.abs(this.velocity_y), 2.0)));				
+					this.tilt = 2.0 * Math.PI/14.0 - Math.acos(Math.pow(Math.abs(this.velocity/2.0), 2.0)/(0.01 + Math.pow(Math.abs(this.velocity/2.0), 2.0) + Math.pow(Math.abs(this.velocity_y), 2.0)));				
 				break;
 		}
 	}

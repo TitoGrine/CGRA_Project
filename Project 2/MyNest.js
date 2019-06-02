@@ -1,7 +1,7 @@
 class MyNest extends CGFobject {
     constructor(scene, x, y, z, scaling) {
         super(scene);
-        this.slices = 30;
+        this.slices = 25;
 
         this.x_pos = x;
         this.y_pos = y;
@@ -14,7 +14,7 @@ class MyNest extends CGFobject {
 
     }
     initBuffers() {
-        this.twig = new MyCylinder(this.scene, 5);
+        this.twig = new MyCylinder(this.scene, 4);
         this.egg = new MySphere(this.scene, 20, 1, 1);
 
         this.randomAngs1 = [];

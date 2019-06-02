@@ -77,9 +77,9 @@ class MyLeaf extends CGFobject {
 
 
 	display(){
-		this.setDefaultAppearance();
+		//this.setDefaultAppearance();
 		//this.drawElements(this.scene.gl.TRIANGLES);
-		super.display();
+		//super.display();
 		this.scene.pushMatrix();
 		this.scene.scale(-2.5,2.5, 2.5);
 		this.scene.leaf_apperance.apply();
