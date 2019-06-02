@@ -362,7 +362,7 @@ class MyBird extends CGFobject {
     display(){
 		this.scene.pushMatrix();
 
-        this.scene.translate(this.x_pos, this.y_pos /*+ this.y_offset*/, this.z_pos);
+        this.scene.translate(this.x_pos, this.y_pos + this.y_offset, this.z_pos);
 		this.scene.rotate(-this.orientation, 0.0, 1.0, 0.0);
 		this.scene.rotate(this.tilt, 1.0, 0.0, 0.0);
 

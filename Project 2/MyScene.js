@@ -102,8 +102,8 @@ class MyScene extends CGFscene {
 					{
 						"F": [ this.ruleF ],
 						"X": [ this.ruleX, 
-							this.ruleX9, 
-							this.ruleX10,
+							this.ruleX1, 
+							this.ruleX2,
 							this.ruleX3,
 							this.ruleX4,
 							this.ruleX5,
@@ -150,18 +150,20 @@ class MyScene extends CGFscene {
 		this.woodText.setShininess(10.0);
 		this.woodText.loadTexture("images/trunk_texture.jpg");
 		this.woodText.setTextureWrap('REPEAT', 'REPEAT');
+
+		
+		this.leaf_apperance = new CGFappearance(this);
+        this.leaf_apperance.setAmbient (0.4, 0.7, 0.4, 0.7);
+        this.leaf_apperance.setDiffuse (0.4, 0.7, 0.4, 0.8);
+        this.leaf_apperance.setSpecular(0.4, 0.7, 0.4, 0.6);
+        this.leaf_apperance.setShininess(10.0);
+        this.leaf_apperance.loadTexture("images/leaf_texture.jpg");
+        this.leaf_apperance.setTextureWrap('REPEAT', 'REPEAT');
 	}
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
-        this.setShininess(10.0);
-	}
-
-	setRedAppearance(){
-		this.setAmbient(1.0, 0.4, 0.2, 1.0);
-        this.setDiffuse(1.0, 0.4, 0.2, 1.0);
-        this.setSpecular(1.0, 0.4, 0.2, 1.0);
         this.setShininess(10.0);
 	}
 

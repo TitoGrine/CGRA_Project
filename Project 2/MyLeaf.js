@@ -63,14 +63,6 @@ class MyLeaf extends CGFobject {
         this.caule_apperance.setDiffuse (0.4, 0.7, 0.4, 0.8);
         this.caule_apperance.setSpecular(0.4, 0.7, 0.4, 0.6);
         this.caule_apperance.setShininess(10.0);
-		
-		this.leaf_apperance = new CGFappearance(this.scene);
-        this.leaf_apperance.setAmbient (0.4, 0.7, 0.4, 0.7);
-        this.leaf_apperance.setDiffuse (0.4, 0.7, 0.4, 0.8);
-        this.leaf_apperance.setSpecular(0.4, 0.7, 0.4, 0.6);
-        this.leaf_apperance.setShininess(10.0);
-        this.leaf_apperance.loadTexture("images/leaf_texture.jpg");
-        this.leaf_apperance.setTextureWrap('REPEAT', 'REPEAT');
 	}
 	setDefaultAppearance(){
 		this.scene.setAmbient(0.3, 0.7, 0.1, 1.0);
@@ -90,7 +82,7 @@ class MyLeaf extends CGFobject {
 		super.display();
 		this.scene.pushMatrix();
 		this.scene.scale(-2.5,2.5, 2.5);
-		this.leaf_apperance.apply();
+		this.scene.leaf_apperance.apply();
 		super.display();
 		this.scene.popMatrix();
 
