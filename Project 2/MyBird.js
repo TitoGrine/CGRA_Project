@@ -92,9 +92,9 @@ class MyBird extends CGFobject {
 		this.red.setTextureWrap("REPEAT", "REPEAT");
 
 		this.black = new CGFappearance(this.scene);
-		this.black.setAmbient (0.2, 0.2, 0.2, 0.3);
-		this.black.setDiffuse (0.2, 0.2, 0.2,  1.0);
-		this.black.setSpecular(0.2, 0.2, 0.2,  0.1);
+		this.black.setAmbient (0.1, 0.1, 0.1, 0.3);
+		this.black.setDiffuse (0.1, 0.1, 0.1,  1.0);
+		this.black.setSpecular(0.1, 0.1, 0.1,  0.1);
 		this.black.setShininess(1);
 	}
     turn(value){
