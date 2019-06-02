@@ -126,9 +126,12 @@ class MyLightning extends MyLSystem {
                     if ( primitive )
                     {
 						primitiveCount++;
+						this.lightningAppearance.apply();
 						this.scene.pushMatrix();
 						this.scene.scale(0.1, 1, 1);
-						this.lightningAppearance.apply();
+						this.scene.translate(0.5, 0.5, 0);
+						primitive.display();
+						this.scene.rotate(Math.PI, 0, 1, 0);
 						primitive.display();
 						this.scene.popMatrix();
 						this.scene.translate(0, 1, 0);
